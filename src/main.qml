@@ -56,33 +56,18 @@ ApplicationWindow {
             Layout.maximumWidth: mWidth
             Layout.preferredWidth: mWidth
             Layout.margins: mMargin
-            spacing: 8
+            spacing: 16
 
 
-            Label {
-                text: "Collections"
-
-                Layout.fillWidth: true
-                font.capitalization: Font.AllUppercase
-                font.weight: Font.Light
-            }
             ModelBox {
+                title: "Collections"
+                model: 100
                 Layout.preferredHeight: root.height * 0.25
             }
 
-            Item {
-                // spacing
-                Layout.minimumHeight: parent.spacing * 2
-            }
-
-            Label {
-                text: "Games"
-
-                Layout.fillWidth: true
-                font.capitalization: Font.AllUppercase
-                font.weight: Font.Light
-            }
             ModelBox {
+                title: "Games"
+                model: 100
                 Layout.fillHeight: true
             }
         }
