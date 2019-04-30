@@ -1,27 +1,12 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
-import QtQuick.Controls.Material 2.12
 import QtQuick.Layouts 1.12
+import "components"
 
 
-Frame {
+Panel {
     property alias title: mTitle.text
     property alias model: mView.model
-    readonly property int mRadius: 5
-
-    Layout.fillWidth: true
-
-    leftPadding: 0
-    rightPadding: 0
-    topPadding: 0
-    bottomPadding: 0
-
-    background: Rectangle {
-        color: '#fff'
-        border.color: '#28000000'
-        border.width: 1
-        radius: 5
-    }
 
     ColumnLayout {
         anchors.fill: parent
@@ -37,31 +22,12 @@ Frame {
             Layout.fillWidth: true
         }
 
-        TextField {
-            id: mSearchField
-
-            Layout.fillWidth: true
-
-            leftPadding: mRadius * 2
-            rightPadding: leftPadding
-            topPadding: 4
-            bottomPadding: topPadding
-
+        InputLineNarrow {
             font.pointSize: 10
-            font.italic: !text
             placeholderText: "Search..."
 
-            background: Rectangle {
-                color: "#10000000"
-            }
-
-            Rectangle {
-                anchors.bottom: parent.bottom
-                width: parent.width
-                height: parent.activeFocus || parent.hovered ? 2 : 1
-                color: parent.activeFocus ? Material.accentColor
-                    : (parent.hovered ? Material.primaryTextColor : Material.hintTextColor)
-            }
+            leftPadding: font.pixelSize * 0.6
+            rightPadding: leftPadding
 
             Image {
                 source: "qrc:///icons/fa/search.svg"
@@ -82,6 +48,7 @@ Frame {
 
         ListView {
             id: mView
+
             Layout.fillWidth: true
             Layout.fillHeight: true
             clip: true

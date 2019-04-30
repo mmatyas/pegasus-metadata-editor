@@ -2,6 +2,12 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>ModelBox.qml</file>
+        <file>CollectionBox.qml</file>
         <file>icons/fa/search.svg</file>
+        <file>components/Panel.qml</file>
+        <file>components/InputLine.qml</file>
+        <file>components/InputArea.qml</file>
+        <file>components/InputLineNarrow.qml</file>
+        <file>Ruleset.qml</file>
     </qresource>
 </RCC>

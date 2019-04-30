@@ -46,16 +46,16 @@ ApplicationWindow {
 
     RowLayout {
         anchors.fill: parent
+        spacing: 0
 
         ColumnLayout {
-            readonly property int mMargin: 16
-            readonly property int mWidth: leftColumnWidth - 2 * mMargin
+            readonly property int mWidth: leftColumnWidth - 2 * spacing
 
             Layout.fillHeight: true
             Layout.minimumWidth: mWidth
             Layout.maximumWidth: mWidth
             Layout.preferredWidth: mWidth
-            Layout.margins: mMargin
+            Layout.margins: spacing
             spacing: 16
 
 
@@ -72,9 +72,7 @@ ApplicationWindow {
             }
         }
 
-        Item {
-            Layout.fillHeight: true
-            Layout.fillWidth: true
+        CollectionBox {
         }
     }
 }
