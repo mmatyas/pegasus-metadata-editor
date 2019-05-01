@@ -9,5 +9,7 @@
         <file>components/InputArea.qml</file>
         <file>components/InputLineNarrow.qml</file>
         <file>Ruleset.qml</file>
+        <file>components/TinyLabel.qml</file>
+        <file>components/FlatButton.qml</file>
     </qresource>
 </RCC>

@@ -22,20 +22,25 @@ ColumnLayout {
         font.pointSize: 17
         font.capitalization: Font.AllUppercase
 
-        topPadding: font.pixelSize * 2
+        topPadding: font.pixelSize * 2.5
     }
 
     Item { width: 1; height: 1 }
 
     Label {
         id: mExtDesc
+        Layout.fillWidth: true
+        wrapMode: Text.Wrap
     }
     ColumnLayout {
         Layout.fillWidth: true
         spacing: 0
 
-        InputLineNarrow {
-            placeholderText: "extension..."
+        RowLayout {
+            Layout.fillWidth: true
+
+            InputLineNarrow { placeholderText: "extension..." }
+            FlatButton { text: "+" }
         }
         ListView {
             Layout.fillWidth: true
@@ -69,13 +74,18 @@ ColumnLayout {
 
     Label {
         id: mFileDesc
+        Layout.fillWidth: true
+        wrapMode: Text.Wrap
     }
     ColumnLayout {
         Layout.fillWidth: true
         spacing: 0
 
-        InputLineNarrow {
-            placeholderText: "path..."
+        RowLayout {
+            Layout.fillWidth: true
+
+            InputLineNarrow { placeholderText: "path..." }
+            FlatButton { text: "+" }
         }
         ListView {
             Layout.fillWidth: true
@@ -109,8 +119,13 @@ ColumnLayout {
 
     Label {
         id: mRegexDesc
+        Layout.fillWidth: true
+        wrapMode: Text.Wrap
     }
-    InputLineNarrow {
-        placeholderText: "regular expression..."
+    RowLayout {
+        Layout.fillWidth: true
+
+        InputLineNarrow { placeholderText: "regular expression..." }
+        FlatButton { text: "+" }
     }
 }

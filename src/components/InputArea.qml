@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Controls.Material 2.12
 import QtQuick.Layouts 1.12
@@ -13,7 +13,7 @@ TextArea {
 
 
     Layout.fillWidth: true
-    Layout.minimumHeight: font.pixelSize * 4
+    Layout.minimumHeight: font.pixelSize * 5
 
     leftPadding: mLabel.leftPadding
     rightPadding: leftPadding
@@ -25,11 +25,14 @@ TextArea {
         color: "#10000000"
     }
 
+    wrapMode: Text.Wrap
+
     Label {
         id: mLabel
         font.pointSize: 10
         padding: font.pixelSize * 0.5
         color: mAccentColor
+        font.family: "Roboto"
     }
 
     Rectangle {
