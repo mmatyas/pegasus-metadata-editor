@@ -28,9 +28,7 @@ ScrollView {
         Item { width: 1; height: 1 } // padding
 
         InputLine {
-            text: "Nintendo Entertainment System"
             label: "Collection name (required)"
-
             font.pointSize: 20
         }
         InputLine {

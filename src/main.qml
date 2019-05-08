@@ -72,9 +72,8 @@ ApplicationWindow {
             }
         }
 
-        /*CollectionBox {
-        }*/
+        CollectionEditor { }
 
-        GameEditor {}
+        //GameEditor {}
     }
 }
