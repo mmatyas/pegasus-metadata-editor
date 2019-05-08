@@ -16,7 +16,7 @@ TextField {
 
     leftPadding: mLabel.leftPadding
     rightPadding: leftPadding
-    topPadding: mLabel.height
+    topPadding: mLabel.height * 1.1
     bottomPadding: font.pixelSize * 0.25
 
     selectByMouse: true
@@ -30,6 +30,7 @@ TextField {
         padding: font.pixelSize * 0.5
         bottomPadding: 0
         color: mAccentColor
+        font.family: "Roboto"
     }
 
     Rectangle {

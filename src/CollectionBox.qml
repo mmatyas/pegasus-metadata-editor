@@ -69,6 +69,9 @@ ScrollView {
             TinyLabel { text: "{env.MYVAR}" }
             TinyLabel { text: "The value of the environment variable MYVAR, if defined" }
         }
+        InputLine {
+            label: "Default working directory"
+        }
 
 
         Ruleset {

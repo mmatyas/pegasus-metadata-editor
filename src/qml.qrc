@@ -11,5 +11,7 @@
         <file>Ruleset.qml</file>
         <file>components/TinyLabel.qml</file>
         <file>components/FlatButton.qml</file>
+        <file>GameEditor.qml</file>
+        <file>components/BigLabel.qml</file>
     </qresource>
 </RCC>
