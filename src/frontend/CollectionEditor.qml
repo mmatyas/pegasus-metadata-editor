@@ -7,7 +7,7 @@ import "components"
 ScrollView {
     Layout.fillWidth: true
     Layout.fillHeight: true
-    contentWidth: width - ScrollBar.vertical.width * 0.5
+    contentWidth: width
 
     ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
     ScrollBar.vertical.policy: ScrollBar.AlwaysOn
@@ -20,12 +20,11 @@ ScrollView {
 
 
     ColumnLayout {
+        anchors.top: parent.top
         anchors.left: parent.left
-        anchors.right: parent.right
         anchors.margins: 16
+        width: parent.width - 3*16
         spacing: 10
-
-        Item { width: 1; height: 1 } // padding
 
         InputLine {
             label: "Collection name (required)"
@@ -208,8 +207,5 @@ ScrollView {
                 }
             }
         }
-
-
-        Item { width: 1; height: 1 } // padding
     }
 }
