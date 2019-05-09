@@ -8,13 +8,23 @@ DEFINES += \
     QT_NO_CAST_FROM_ASCII \
     QT_NO_CAST_FROM_BYTEARRAY \
 
+HEADERS += \
+    FolderListModel.h \
+
 SOURCES += \
-    main.cpp
+    main.cpp \
+    FolderListModel.cpp
 
 RESOURCES += frontend/qml.qrc
 
+include(utils/utils.pri)
+
+
 android {
     QT += androidextras
+
+    SOURCES += AndroidHelpers.cpp
+    HEADERS += AndroidHelpers.h
 
     OTHER_FILES += \
         platform/android/AndroidManifest.xml \

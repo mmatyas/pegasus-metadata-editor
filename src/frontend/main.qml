@@ -16,8 +16,8 @@ ApplicationWindow {
 
 
     Component.onCompleted: {
-        x = Screen.width / 2 - width / 2
-        y = Screen.height / 2 - height / 2
+        x = Screen.width / 2 - width / 2;
+        y = Screen.height / 2 - height / 2;
     }
 
     Shortcut {
@@ -38,7 +38,8 @@ ApplicationWindow {
             anchors.fill: parent
 
             ToolButton {
-                icon.name: "document-open"
+                icon.source: "qrc:///icons/fa/folder-open.svg"
+                onClicked: filepicker.open()
             }
         }
     }
@@ -75,5 +76,9 @@ ApplicationWindow {
         CollectionEditor { }
 
         //GameEditor {}
+    }
+
+    FilePicker {
+        id: filepicker
     }
 }
