@@ -11,7 +11,7 @@ DEFINES += \
 SOURCES += \
     main.cpp
 
-RESOURCES += qml.qrc
+RESOURCES += frontend/qml.qrc
 
 
 unix:!android: target.path = /opt/$${TARGET}/
