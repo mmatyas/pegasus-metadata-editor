@@ -1,4 +1,4 @@
-QT += quick quickcontrols2
+QT += quick quickcontrols2 svg
 CONFIG += c++11 qtquickcompiler warn_on
 
 DEFINES += \
@@ -12,6 +12,23 @@ SOURCES += \
     main.cpp
 
 RESOURCES += frontend/qml.qrc
+
+android {
+    QT += androidextras
+
+    OTHER_FILES += \
+        platform/android/AndroidManifest.xml \
+        platform/android/res/drawable/banner.png \
+        platform/android/res/drawable-ldpi/icon.png \
+        platform/android/res/drawable-mdpi/icon.png \
+        platform/android/res/drawable-hdpi/icon.png \
+        platform/android/res/drawable-xhdpi/icon.png \
+        platform/android/res/drawable-xxhdpi/icon.png \
+        platform/android/res/drawable-xxxhdpi/icon.png \
+        platform/android/src/org/pegasus_frontend/metaed/MainActivity.java \
+
+    ANDROID_PACKAGE_SOURCE_DIR = $$PWD/platform/android
+}
 
 
 unix:!android: target.path = /opt/$${TARGET}/
