@@ -1,0 +1,12 @@
+# ignore build dirs
+build*/
+
+# ignore IDE project files
+*.pro.user*
+*.autosave
+*.kdev4
+*.workspace
+
+# ignore Qt generated files
+*.qmlc
+*.jsc
