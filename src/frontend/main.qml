@@ -80,5 +80,6 @@ ApplicationWindow {
 
     FilePicker {
         id: filepicker
+        onPick: console.log(path)
     }
 }

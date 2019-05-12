@@ -9,7 +9,7 @@ import Pegasus.FolderListModel 1.0
 Dialog {
     id: root
 
-    width: parent.width * 0.8
+    width: parent.width * 0.75
     height: parent.height * 0.95
     anchors.centerIn: parent
 
@@ -20,9 +20,6 @@ Dialog {
     topPadding: 0
     rightPadding: 0
     bottomPadding: 0
-
-    onAccepted: console.log("Ok clicked")
-    onRejected: console.log("Cancel clicked")
 
     signal pick(string path)
 
@@ -58,8 +55,8 @@ Dialog {
             spacing: 0
             clip: true
 
-            ListView {
-                Layout.minimumWidth: parent.width * 0.33
+            /*ListView {
+                Layout.minimumWidth: parent.width * 0.25
                 Layout.fillHeight: true
 
                 model: 100
@@ -70,7 +67,7 @@ Dialog {
                     color: Material.toolBarColor
                     z: -1
                 }
-            }
+            }*/
 
             ListView {
                 Layout.fillWidth: true
@@ -102,10 +99,13 @@ Dialog {
             height: label.height
 
             function pickItem() {
-                if (isDir)
+                if (isDir) {
                     folderModel.cd(name);
-                else
+                }
+                else {
                     root.pick(folderModel.folder);
+                    root.close();
+                }
             }
 
             Keys.onPressed: {
@@ -151,7 +151,6 @@ Dialog {
                 anchors.fill: parent
                 hoverEnabled: true
                 onClicked: pickItem()
-                cursorShape: Qt.PointingHandCursor
             }
         }
     }
