@@ -103,7 +103,7 @@ Dialog {
                     folderModel.cd(name);
                 }
                 else {
-                    root.pick(folderModel.folder);
+                    root.pick(folderModel.folder + "/" + name);
                     root.close();
                 }
             }
