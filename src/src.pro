@@ -18,6 +18,7 @@ RESOURCES += frontend/qml.qrc
 
 include(utils/utils.pri)
 include(model/model.pri)
+include(parser/parser.pri)
 include(../thirdparty/thirdparty.pri)
 
 
