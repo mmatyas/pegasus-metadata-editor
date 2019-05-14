@@ -5,6 +5,7 @@ import "components"
 
 
 Panel {
+    property string modelNameKey
     property alias title: mTitle.text
     property alias model: mView.model
 
@@ -54,7 +55,7 @@ Panel {
             clip: true
 
             delegate: Text {
-                text: modelData
+                text: modelData[modelNameKey]
                 padding: font.pixelSize * 0.3
                 leftPadding: font.pixelSize * 0.6
                 rightPadding: leftPadding

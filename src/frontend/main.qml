@@ -62,13 +62,15 @@ ApplicationWindow {
 
             ModelBox {
                 title: "Collections"
-                model: 100
+                model: Api.collections
+                modelNameKey: "name"
                 Layout.preferredHeight: root.height * 0.25
             }
 
             ModelBox {
                 title: "Games"
-                model: 100
+                model: Api.games
+                modelNameKey: "title"
                 Layout.fillHeight: true
             }
         }
@@ -80,6 +82,6 @@ ApplicationWindow {
 
     FilePicker {
         id: filepicker
-        onPick: console.log(path)
+        onPick: Api.openFile(path)
     }
 }
