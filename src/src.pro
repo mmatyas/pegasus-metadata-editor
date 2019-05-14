@@ -5,8 +5,6 @@ DEFINES += \
     QT_DEPRECATED_WARNINGS \
     QT_DISABLE_DEPRECATED_BEFORE=0x060000 \
     QT_NO_CAST_TO_ASCII \
-    QT_NO_CAST_FROM_ASCII \
-    QT_NO_CAST_FROM_BYTEARRAY \
 
 HEADERS += \
     FolderListModel.h \
@@ -20,6 +18,7 @@ RESOURCES += frontend/qml.qrc
 
 include(utils/utils.pri)
 include(model/model.pri)
+include(../thirdparty/thirdparty.pri)
 
 
 android {
