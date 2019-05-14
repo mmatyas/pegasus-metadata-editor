@@ -13,11 +13,13 @@ HEADERS += \
 
 SOURCES += \
     main.cpp \
-    FolderListModel.cpp
+    FolderListModel.cpp \
 
 RESOURCES += frontend/qml.qrc
 
+
 include(utils/utils.pri)
+include(model/model.pri)
 
 
 android {
