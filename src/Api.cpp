@@ -58,14 +58,16 @@ void Api::openFile(QString path)
 
 
     parser::Entries parsed;
-    if (!parser::parse(path, parsed, render_line_error)) {
+    const bool success = parser::parse(path, parsed, render_line_error);
+    if (!success)
         m_error_log = QStringLiteral("Error: Could not open the file");
-        emit errorLogChanged();
-        return;
-    }
 
     m_error_log = errors.join(QChar('\n'));
     emit errorLogChanged();
 
-    build_qml_layer(parsed, *this);
+    if (!m_error_log.isEmpty())
+        qWarning().noquote() << m_error_log;
+
+    if (success)
+        build_qml_layer(parsed, *this);
 }
