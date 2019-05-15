@@ -70,8 +70,8 @@ ApplicationWindow {
                     modelNameKey: "name"
                     onPicked: {
                         focus = true;
-                        gameEditor.visible = false;
-                        collectionEditor.visible = true;
+                        gameEditor.enabled = false;
+                        collectionEditor.enabled = true;
                         collectionEditor.focus = true;
                     }
                     Layout.preferredHeight: root.height * 0.25
@@ -84,8 +84,8 @@ ApplicationWindow {
                     modelNameKey: "title"
                     onPicked: {
                         focus = true;
-                        collectionEditor.visible = false;
-                        gameEditor.visible = true;
+                        collectionEditor.enabled = false;
+                        gameEditor.enabled = true;
                         gameEditor.focus = true;
                     }
                     Layout.fillHeight: true
@@ -96,12 +96,14 @@ ApplicationWindow {
 
         CollectionEditor {
             id: collectionEditor
-            visible: false
+            enabled: false
+            visible: enabled && cdata
             cdata: Api.collections.get(collectionSelector.currentIndex)
         }
         GameEditor {
             id: gameEditor
-            visible: false
+            enabled: false
+            visible: enabled && cdata
             cdata: Api.games.get(gameSelector.currentIndex)
         }
     }
@@ -110,9 +112,9 @@ ApplicationWindow {
         id: filepicker
         onPick: {
             collectionSelector.focus = false;
-            collectionEditor.visible = false;
+            collectionEditor.enabled = false;
             gameSelector.focus = false;
-            gameEditor.visible = false;
+            gameEditor.enabled = false;
 
             Api.openFile(path);
         }

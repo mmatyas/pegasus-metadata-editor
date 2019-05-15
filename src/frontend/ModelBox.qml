@@ -1,6 +1,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
+import SortFilterProxyModel 0.2
 import "components"
 
 
@@ -9,8 +10,8 @@ Panel {
 
     property string modelNameKey
     property alias title: mTitle.text
-    property alias model: mView.model
-    readonly property alias currentIndex: mView.currentIndex
+    property alias model: mModelFilter.sourceModel
+    readonly property int currentIndex: mModelFilter.mapToSource(mView.currentIndex)
 
     signal picked
 
@@ -30,6 +31,7 @@ Panel {
         }
 
         InputLineNarrow {
+            id: mSearch
             font.pointSize: 10
             placeholderText: "Search..."
 
@@ -53,6 +55,15 @@ Panel {
             }
         }
 
+        SortFilterProxyModel {
+            id: mModelFilter
+            filters: RegExpFilter {
+                roleName: modelNameKey
+                pattern: mSearch.text
+                caseSensitivity: Qt.CaseInsensitive
+            }
+        }
+
         ListView {
             id: mView
 
@@ -60,6 +71,7 @@ Panel {
             Layout.fillHeight: true
             clip: true
 
+            model: mModelFilter
             delegate: mViewDelegate
 
             ScrollBar.vertical: ScrollBar {}
@@ -79,7 +91,7 @@ Panel {
 
             function pick() {
                 ListView.view.currentIndex = index;
-                root.picked(index);
+                root.picked();
             }
 
             Rectangle {
