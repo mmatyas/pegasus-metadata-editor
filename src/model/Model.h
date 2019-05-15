@@ -22,18 +22,36 @@
 #include <QObject>
 
 
-
 #define FIELD_PROP(type, field) \
     private: \
         Q_PROPERTY(type field READ field WRITE set_##field NOTIFY field##Changed) \
         type field() const { return m_data.field; } \
-        void set_##field(type val) { m_data.field = val; }
+        void set_##field(type val) { \
+            if (m_data.field != val) { \
+                m_data.field = val; \
+                emit field##Changed(); \
+            } \
+        }
 
 #define FIELD_PTR_PROP(type, field) \
     private: \
         Q_PROPERTY(type field READ field WRITE set_##field NOTIFY field##Changed) \
         type field() const { return m_data->field; } \
-        void set_##field(type val) { m_data->field = val; }
+        void set_##field(type val) { \
+            if (m_data->field != val) { \
+                m_data->field = val; \
+                emit field##Changed(); \
+            } \
+        }
+
+#define FIELD_PROP_FLOAT(type, field) \
+    private: \
+        Q_PROPERTY(type field READ field WRITE set_##field NOTIFY field##Changed) \
+        type field() const { return m_data.field; } \
+        void set_##field(type val) { \
+            m_data.field = val; \
+            emit field##Changed(); \
+        }
 
 #define FIELD_SIGNAL(field) \
     void field##Changed();
@@ -117,7 +135,7 @@ class Game: public QObject {
     FIELD_PROP(QString, launch_workdir)
 
     FIELD_PROP(int, max_players)
-    FIELD_PROP(float, rating)
+    FIELD_PROP_FLOAT(float, rating)
     FIELD_PROP(QDate, release_date)
 
     FIELD_PROP(QStringList, developers)
