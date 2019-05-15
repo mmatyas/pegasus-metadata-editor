@@ -35,6 +35,8 @@ void try_parse_players(const metafile::Entry& entry, int& target, ErrorCB error_
         target = rx_match.captured(1).toInt();
         if (!rx_match.captured(3).isEmpty())
             target = std::max(target, rx_match.captured(3).toInt());
+
+        return;
     }
 
     error_cb(entry.line,
