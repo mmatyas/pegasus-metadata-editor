@@ -42,9 +42,8 @@
     }
 #define EXT_LIST(name, target) \
     if (entry.key == QLatin1String(#name)) { \
-        QVector<QStringRef> extrefs = first_line_of(entry, error_cb) \
-            .toLower() \
-            .splitRef(QChar(',')); \
+        QString line_lower = first_line_of(entry, error_cb).toLower(); \
+        QVector<QStringRef> extrefs = line_lower.splitRef(QChar(',')); \
     \
         target.reserve(target.size() + extrefs.size()); \
         for (const QStringRef& extref : extrefs) \
