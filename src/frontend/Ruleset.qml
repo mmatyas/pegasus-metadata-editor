@@ -129,6 +129,7 @@ ColumnLayout {
         InputLineNarrow {
             text: cdata ? cdata.regex : ""
             placeholderText: "regular expression..."
+            onTextEdited: if (cdata) cdata.regex = text;
         }
         FlatButton { text: "+" }
     }

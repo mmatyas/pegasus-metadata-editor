@@ -24,6 +24,9 @@ ScrollView {
     function get_str(field) {
         return cdata ? cdata[field] : "";
     }
+    function set_val(field, text) {
+        if (cdata) cdata[field] = text;
+    }
 
 
     ColumnLayout {
@@ -37,14 +40,17 @@ ScrollView {
             label: "Game title (required)"
             text: get_str("title")
             font.pointSize: 20
+            onTextEdited: set_val("title", text)
         }
         InputArea {
             label: "Summary (short description)"
             text: get_str("summary")
+            onTextChanged: set_val("summary", text)
         }
         InputArea {
             label: "Description"
             text: get_str("description")
+            onTextChanged: set_val("description", text)
         }
 
         RowLayout {
@@ -60,6 +66,7 @@ ScrollView {
                 value: cdata ? cdata.max_players : 1
                 stepSize: 1
                 snapMode: Slider.SnapOnRelease
+                onMoved: set_val("max_players", value)
             }
             Label {
                 text: mPlayerCnt.value
@@ -81,6 +88,7 @@ ScrollView {
                 value: cdata ? cdata.rating : 0
                 stepSize: 1
                 snapMode: Slider.SnapOnRelease
+                onMoved: set_val("rating", value / 100)
             }
             Label {
                 text: (mRating.value > 0.5) ? (mRating.value + "%") : "--"
@@ -276,6 +284,7 @@ ScrollView {
             label: "Game-specific launch command"
             font.family: "Monospace"
             text: get_str("launch_cmd")
+            onTextChanged: set_val("launch_cmd", text)
         }
         TinyLabel {
             text: "The launch command is a single value, but you can break "
@@ -302,6 +311,7 @@ ScrollView {
         InputLine {
             label: "Game-specific working directory"
             text: get_str("launch_workdir")
+            onTextEdited: set_val("launch_workdir", text)
         }
 
 
