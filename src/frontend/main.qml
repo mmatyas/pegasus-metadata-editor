@@ -97,15 +97,24 @@ ApplicationWindow {
         CollectionEditor {
             id: collectionEditor
             visible: false
+            cdata: Api.collections.get(collectionSelector.currentIndex)
         }
         GameEditor {
             id: gameEditor
             visible: false
+            cdata: Api.games.get(gameSelector.currentIndex)
         }
     }
 
     FilePicker {
         id: filepicker
-        onPick: Api.openFile(path)
+        onPick: {
+            collectionSelector.focus = false;
+            collectionEditor.visible = false;
+            gameSelector.focus = false;
+            gameEditor.visible = false;
+
+            Api.openFile(path);
+        }
     }
 }

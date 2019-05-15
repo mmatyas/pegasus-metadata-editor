@@ -5,6 +5,8 @@ import "components"
 
 
 ScrollView {
+    property var cdata
+
     Layout.fillWidth: true
     Layout.fillHeight: true
     contentWidth: width
@@ -19,6 +21,11 @@ ScrollView {
     }
 
 
+    function get_str(field) {
+        return cdata ? cdata[field] : "";
+    }
+
+
     ColumnLayout {
         anchors.top: parent.top
         anchors.left: parent.left
@@ -28,13 +35,16 @@ ScrollView {
 
         InputLine {
             label: "Game title (required)"
+            text: get_str("title")
             font.pointSize: 20
         }
         InputArea {
             label: "Summary (short description)"
+            text: get_str("summary")
         }
         InputArea {
             label: "Description"
+            text: get_str("description")
         }
 
         RowLayout {
@@ -47,7 +57,7 @@ ScrollView {
                 id: mPlayerCnt
                 from: 1
                 to: 10
-                value: 1
+                value: cdata ? cdata.max_players : 1
                 stepSize: 1
                 snapMode: Slider.SnapOnRelease
             }
@@ -68,7 +78,7 @@ ScrollView {
                 id: mRating
                 from: 0
                 to: 100
-                value: 0
+                value: cdata ? cdata.rating : 0
                 stepSize: 1
                 snapMode: Slider.SnapOnRelease
             }
@@ -78,37 +88,6 @@ ScrollView {
                 Layout.preferredWidth: font.pixelSize * 2
             }
         }
-
-        InputArea {
-            label: "Game-specific launch command"
-            font.family: "Monospace"
-        }
-        TinyLabel {
-            text: "The launch command is a single value, but you can break "
-                + "it up to multiple lines for better readability. You can use "
-                + "the following variables in it:"
-            Layout.fillWidth: true
-        }
-        GridLayout {
-            columns: 2
-            columnSpacing: 32
-            Layout.leftMargin: 16
-
-            TinyLabel { text: "{file.path}" }
-            TinyLabel { text: "Absolute path to the launched file" }
-            TinyLabel { text: "{file.name}" }
-            TinyLabel { text: "The file name part of the path" }
-            TinyLabel { text: "{file.basename}" }
-            TinyLabel { text: "The file name without extension" }
-            TinyLabel { text: "{file.dir}" }
-            TinyLabel { text: "The directory where the file is located" }
-            TinyLabel { text: "{env.MYVAR}" }
-            TinyLabel { text: "The value of the environment variable MYVAR, if defined" }
-        }
-        InputLine {
-            label: "Game-specific working directory"
-        }
-
 
 
         BigLabel {
@@ -135,7 +114,7 @@ ScrollView {
 
                 Layout.minimumHeight: contentHeight
 
-                model: 5
+                model: cdata ? cdata.files : 0
                 delegate: Label {
                     width: parent.width
 
@@ -177,7 +156,7 @@ ScrollView {
 
                 Layout.minimumHeight: contentHeight
 
-                model: 5
+                model: cdata ? cdata.developers : 0
                 delegate: Label {
                     width: parent.width
 
@@ -219,7 +198,7 @@ ScrollView {
 
                 Layout.minimumHeight: contentHeight
 
-                model: 5
+                model: cdata ? cdata.publishers : 0
                 delegate: Label {
                     width: parent.width
 
@@ -261,7 +240,7 @@ ScrollView {
 
                 Layout.minimumHeight: contentHeight
 
-                model: 5
+                model: cdata ? cdata.genres : 0
                 delegate: Label {
                     width: parent.width
 
@@ -284,68 +263,48 @@ ScrollView {
             }
         }
 
-        Item { width: 1; height: 1 }
-
-
-        Label {
-            text: "Anything else"
-            font.pointSize: 17
-            font.capitalization: Font.AllUppercase
-
-            topPadding: font.pixelSize * 2.5
-            bottomPadding: font.pixelSize * 0.5
+        BigLabel {
+            text: "Launching"
         }
         Label {
             Layout.fillWidth: true
-            text: "Any kind of additional information you wish to store. "
-                + "These entries will not be used by Pegasus."
+            text: "If this game requires a special launch command or working directory, you can set it here. "
+                + "By default Pegasus will use the values from the collection that contains this game"
             wrapMode: Text.Wrap
         }
-        ColumnLayout {
-            Layout.fillWidth: true
-            spacing: 0
-
-            RowLayout {
-                Layout.fillWidth: true
-
-                InputLineNarrow {
-                    placeholderText: "key..."
-                    Layout.fillWidth: true
-                }
-                InputLineNarrow {
-                    placeholderText: "value..."
-                    Layout.fillWidth: true
-                }
-                FlatButton {
-                    text: "+"
-                }
-            }
-            ListView {
-                Layout.fillWidth: true
-
-                Layout.minimumHeight: contentHeight
-
-                model: 5
-                delegate: Label {
-                    width: parent.width
-
-                    text: modelData
-                    font.pointSize: 10
-
-                    padding: font.pixelSize * 0.3
-                    leftPadding: font.pixelSize * 0.6
-                    rightPadding: leftPadding
-                }
-
-                Rectangle {
-                    anchors.fill: parent
-                    color: "transparent"
-                    opacity: 0.25
-                    border.color: "#000"
-                    border.width: 1
-                    z: -1
-                }
-            }
+        InputArea {
+            label: "Game-specific launch command"
+            font.family: "Monospace"
+            text: get_str("launch_cmd")
         }
+        TinyLabel {
+            text: "The launch command is a single value, but you can break "
+                + "it up to multiple lines for better readability. You can use "
+                + "the following variables in it:"
+            Layout.fillWidth: true
+        }
+        GridLayout {
+            columns: 2
+            columnSpacing: 32
+            Layout.leftMargin: 16
+
+            TinyLabel { text: "{file.path}" }
+            TinyLabel { text: "Absolute path to the launched file" }
+            TinyLabel { text: "{file.name}" }
+            TinyLabel { text: "The file name part of the path" }
+            TinyLabel { text: "{file.basename}" }
+            TinyLabel { text: "The file name without extension" }
+            TinyLabel { text: "{file.dir}" }
+            TinyLabel { text: "The directory where the file is located" }
+            TinyLabel { text: "{env.MYVAR}" }
+            TinyLabel { text: "The value of the environment variable MYVAR, if defined" }
+        }
+        InputLine {
+            label: "Game-specific working directory"
+            text: get_str("launch_workdir")
+        }
+
+
+        Item { width: 1; height: 1 }
     }
 }

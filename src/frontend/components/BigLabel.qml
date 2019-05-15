@@ -6,6 +6,6 @@ Label {
     font.capitalization: Font.AllUppercase
     wrapMode: Text.Wrap
 
-    topPadding: font.pixelSize * 2.5
-    bottomPadding: font.pixelSize * 0.5
+    topPadding: font.pixelSize * 2
+    bottomPadding: font.pixelSize * 0.25
 }

@@ -5,6 +5,8 @@ import "components"
 
 
 ScrollView {
+    property var cdata
+
     Layout.fillWidth: true
     Layout.fillHeight: true
     contentWidth: width
@@ -19,6 +21,11 @@ ScrollView {
     }
 
 
+    function get_str(field) {
+        return cdata ? cdata[field] : "";
+    }
+
+
     ColumnLayout {
         anchors.top: parent.top
         anchors.left: parent.left
@@ -28,21 +35,26 @@ ScrollView {
 
         InputLine {
             label: "Collection name (required)"
+            text: get_str("name")
             font.pointSize: 20
         }
         InputLine {
             label: "Shortened name"
+            text: get_str("shortname")
         }
 
         InputArea {
             label: "Summary (short description)"
+            text: get_str("summary")
         }
         InputArea {
             label: "Description"
+            text: get_str("description")
         }
         InputArea {
             label: "Default launch command"
             font.family: "Monospace"
+            text: get_str("launch_cmd")
         }
         TinyLabel {
             text: "The launch command is a single value, but you can break "
@@ -68,6 +80,7 @@ ScrollView {
         }
         InputLine {
             label: "Default working directory"
+            text: get_str("launch_workdir")
         }
 
 
@@ -86,15 +99,9 @@ ScrollView {
         }
 
 
-        Label {
+        BigLabel {
             text: "Directories"
-            font.pointSize: 17
-            font.capitalization: Font.AllUppercase
-
-            topPadding: font.pixelSize * 2.5
-            bottomPadding: font.pixelSize * 0.5
         }
-
         Label {
             Layout.fillWidth: true
             text: "By default Pegasus will search for games only in the directory (and subdirectories) "
@@ -121,7 +128,7 @@ ScrollView {
 
                 Layout.minimumHeight: contentHeight
 
-                model: 5
+                model: cdata ? cdata.directories : 0
                 delegate: Label {
                     width: parent.width
 
@@ -142,70 +149,9 @@ ScrollView {
                     z: -1
                 }
             }
-        }
-
-        Item { width: 1; height: 1 }
 
 
-        Label {
-            text: "Anything else"
-            font.pointSize: 17
-            font.capitalization: Font.AllUppercase
-
-            topPadding: font.pixelSize * 2.5
-            bottomPadding: font.pixelSize * 0.5
-        }
-        Label {
-            Layout.fillWidth: true
-            text: "Any kind of additional information you wish to store. "
-                + "These entries will not be used by Pegasus."
-            wrapMode: Text.Wrap
-        }
-        ColumnLayout {
-            Layout.fillWidth: true
-            spacing: 0
-
-            RowLayout {
-                Layout.fillWidth: true
-
-                InputLineNarrow {
-                    placeholderText: "key..."
-                    Layout.fillWidth: true
-                }
-                InputLineNarrow {
-                    placeholderText: "value..."
-                    Layout.fillWidth: true
-                }
-                FlatButton {
-                    text: "+"
-                }
-            }
-            ListView {
-                Layout.fillWidth: true
-
-                Layout.minimumHeight: contentHeight
-
-                model: 5
-                delegate: Label {
-                    width: parent.width
-
-                    text: modelData
-                    font.pointSize: 10
-
-                    padding: font.pixelSize * 0.3
-                    leftPadding: font.pixelSize * 0.6
-                    rightPadding: leftPadding
-                }
-
-                Rectangle {
-                    anchors.fill: parent
-                    color: "transparent"
-                    opacity: 0.25
-                    border.color: "#000"
-                    border.width: 1
-                    z: -1
-                }
-            }
+            Item { width: 1; height: 1 }
         }
     }
 }
