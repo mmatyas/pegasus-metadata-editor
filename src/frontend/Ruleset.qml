@@ -9,6 +9,7 @@ ColumnLayout {
     property alias extensionsText: mExtDesc.text
     property alias filesText: mFileDesc.text
     property alias regexText: mRegexDesc.text
+    property var cdata
 
     Layout.fillWidth: true
 
@@ -47,7 +48,7 @@ ColumnLayout {
 
             Layout.minimumHeight: contentHeight
 
-            model: 5
+            model: cdata ? cdata.extensions : 0
             delegate: Label {
                 width: parent.width
 
@@ -92,7 +93,7 @@ ColumnLayout {
 
             Layout.minimumHeight: contentHeight
 
-            model: 5
+            model: cdata ? cdata.files : 0
             delegate: Label {
                 width: parent.width
 
@@ -125,7 +126,10 @@ ColumnLayout {
     RowLayout {
         Layout.fillWidth: true
 
-        InputLineNarrow { placeholderText: "regular expression..." }
+        InputLineNarrow {
+            text: cdata ? cdata.regex : ""
+            placeholderText: "regular expression..."
+        }
         FlatButton { text: "+" }
     }
 }

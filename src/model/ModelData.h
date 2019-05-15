@@ -28,7 +28,7 @@
 namespace modeldata {
 
 struct CollectionFilter {
-    QStringList exts;
+    QStringList extensions;
     QStringList files;
     QString regex;
 

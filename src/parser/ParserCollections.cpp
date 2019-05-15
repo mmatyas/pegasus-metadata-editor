@@ -62,10 +62,10 @@ void parse_collection_entry(const metafile::Entry& entry, modeldata::Collection&
     SINGLE_VALUE(regex, collection.include.regex)
     SINGLE_VALUE(ignore-regex, collection.exclude.regex)
 
-    EXT_LIST(extension, collection.include.exts)
-    EXT_LIST(extensions, collection.include.exts)
-    EXT_LIST(ignore-extension, collection.exclude.exts)
-    EXT_LIST(ignore-extensions, collection.exclude.exts)
+    EXT_LIST(extension, collection.include.extensions)
+    EXT_LIST(extensions, collection.include.extensions)
+    EXT_LIST(ignore-extension, collection.exclude.extensions)
+    EXT_LIST(ignore-extensions, collection.exclude.extensions)
 
     error_cb(entry.line, QStringLiteral("Unknown attribute `%1`").arg(entry.key));
 }

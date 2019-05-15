@@ -43,7 +43,7 @@
 namespace model {
 class CollectionFilter: public QObject {
     Q_OBJECT
-    FIELD_PTR_PROP(QStringList, exts)
+    FIELD_PTR_PROP(QStringList, extensions)
     FIELD_PTR_PROP(QStringList, files)
     FIELD_PTR_PROP(QString, regex)
 
@@ -52,7 +52,7 @@ public:
 
 signals:
     // listing the signals manually because Moc is an idiot
-    FIELD_SIGNAL(exts)
+    FIELD_SIGNAL(extensions)
     FIELD_SIGNAL(files)
     FIELD_SIGNAL(regex)
 

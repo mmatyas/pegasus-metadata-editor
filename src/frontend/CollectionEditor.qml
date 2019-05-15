@@ -5,6 +5,8 @@ import "components"
 
 
 ScrollView {
+    id: root
+
     property var cdata
 
     Layout.fillWidth: true
@@ -89,6 +91,7 @@ ScrollView {
             extensionsText: "Include all files with the following extensions:"
             filesText: "In addition, also include the following files (the paths should be relative to the metadata file):"
             regexText: "In addition, also include files matching the following Perl regular expression:"
+            cdata: root.cdata ? root.cdata.include : null
         }
 
         Ruleset {
@@ -96,6 +99,7 @@ ScrollView {
             extensionsText: "Exclude all files with the following extensions:"
             filesText: "In addition, also exclude the following files (the paths should be relative to the metadata file):"
             regexText: "In addition, also exclude files matching the following Perl regular expression:"
+            cdata: root.cdata ? root.cdata.exclude : null
         }
 
 
