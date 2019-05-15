@@ -5,9 +5,15 @@ import "components"
 
 
 Panel {
+    id: root
+
     property string modelNameKey
     property alias title: mTitle.text
     property alias model: mView.model
+    readonly property alias currentIndex: mView.currentIndex
+
+    signal picked
+
 
     ColumnLayout {
         anchors.fill: parent
@@ -54,14 +60,43 @@ Panel {
             Layout.fillHeight: true
             clip: true
 
-            delegate: Text {
-                text: modelData[modelNameKey]
-                padding: font.pixelSize * 0.3
-                leftPadding: font.pixelSize * 0.6
-                rightPadding: leftPadding
-            }
+            delegate: mViewDelegate
 
             ScrollBar.vertical: ScrollBar {}
+        }
+    }
+
+    Component {
+        id: mViewDelegate
+
+        Text {
+            text: modelData[modelNameKey]
+
+            width: ListView.view.width
+            padding: font.pixelSize * 0.3
+            leftPadding: font.pixelSize * 0.6
+            rightPadding: leftPadding
+
+            function pick() {
+                ListView.view.currentIndex = index;
+                root.picked(index);
+            }
+
+            Rectangle {
+                anchors.fill: parent
+                z: -1
+                color: root.focus && parent.ListView.isCurrentItem ? "#ebe"
+                     : mouse.containsMouse ? "#ddd"
+                     : "transparent"
+                visible: color != "transparent"
+            }
+
+            MouseArea {
+                id: mouse
+                anchors.fill: parent
+                hoverEnabled: true
+                onClicked: parent.pick()
+            }
         }
     }
 }

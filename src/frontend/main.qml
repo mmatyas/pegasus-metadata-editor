@@ -49,35 +49,59 @@ ApplicationWindow {
         anchors.fill: parent
         spacing: 0
 
-        ColumnLayout {
-            readonly property int mWidth: leftColumnWidth - 2 * spacing
+        FocusScope {
+            readonly property int padding: 16
+            readonly property int mWidth: leftColumnWidth - 2 * padding
 
             Layout.fillHeight: true
             Layout.minimumWidth: mWidth
             Layout.maximumWidth: mWidth
             Layout.preferredWidth: mWidth
-            Layout.margins: spacing
-            spacing: 16
+            Layout.margins: padding
 
+            ColumnLayout {
+                anchors.fill: parent
+                spacing: 16
 
-            ModelBox {
-                title: "Collections"
-                model: Api.collections
-                modelNameKey: "name"
-                Layout.preferredHeight: root.height * 0.25
-            }
+                ModelBox {
+                    id: collectionSelector
+                    title: "Collections"
+                    model: Api.collections
+                    modelNameKey: "name"
+                    onPicked: {
+                        focus = true;
+                        gameEditor.visible = false;
+                        collectionEditor.visible = true;
+                        collectionEditor.focus = true;
+                    }
+                    Layout.preferredHeight: root.height * 0.25
+                }
 
-            ModelBox {
-                title: "Games"
-                model: Api.games
-                modelNameKey: "title"
-                Layout.fillHeight: true
+                ModelBox {
+                    id: gameSelector
+                    title: "Games"
+                    model: Api.games
+                    modelNameKey: "title"
+                    onPicked: {
+                        focus = true;
+                        collectionEditor.visible = false;
+                        gameEditor.visible = true;
+                        gameEditor.focus = true;
+                    }
+                    Layout.fillHeight: true
+                }
             }
         }
 
-        CollectionEditor { }
 
-        //GameEditor {}
+        CollectionEditor {
+            id: collectionEditor
+            visible: false
+        }
+        GameEditor {
+            id: gameEditor
+            visible: false
+        }
     }
 
     FilePicker {
