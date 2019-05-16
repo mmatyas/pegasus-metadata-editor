@@ -2,7 +2,11 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 
 Rectangle {
+    id: root
+
     property alias text: mText.text
+
+    signal pressed()
 
     width: mText.width * 2
     height: mText.height
@@ -21,5 +25,6 @@ Rectangle {
         anchors.fill: parent
         hoverEnabled: true
         cursorShape: Qt.PointingHandCursor
+        onClicked: root.pressed()
     }
 }
