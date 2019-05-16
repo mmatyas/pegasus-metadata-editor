@@ -111,12 +111,6 @@ ScrollView {
             Layout.fillWidth: true
             spacing: 0
 
-            RowLayout {
-                Layout.fillWidth: true
-
-                InputLineNarrow { placeholderText: "file path..." }
-                FlatButton { text: "+" }
-            }
             ListView {
                 Layout.fillWidth: true
 
@@ -134,6 +128,11 @@ ScrollView {
                     z: -1
                 }
             }
+            FlatButton {
+                Layout.fillWidth: true
+                text: "+"
+                onPressed: if (cdata) cdata.files.create()
+            }
         }
 
 
@@ -144,12 +143,6 @@ ScrollView {
             Layout.fillWidth: true
             spacing: 0
 
-            RowLayout {
-                Layout.fillWidth: true
-
-                InputLineNarrow { placeholderText: "developer..." }
-                FlatButton { text: "+" }
-            }
             ListView {
                 Layout.fillWidth: true
 
@@ -167,6 +160,11 @@ ScrollView {
                     z: -1
                 }
             }
+            FlatButton {
+                Layout.fillWidth: true
+                text: "+"
+                onPressed: if (cdata) cdata.developers.create()
+            }
         }
 
 
@@ -177,12 +175,6 @@ ScrollView {
             Layout.fillWidth: true
             spacing: 0
 
-            RowLayout {
-                Layout.fillWidth: true
-
-                InputLineNarrow { placeholderText: "publisher..." }
-                FlatButton { text: "+" }
-            }
             ListView {
                 Layout.fillWidth: true
 
@@ -200,6 +192,11 @@ ScrollView {
                     z: -1
                 }
             }
+            FlatButton {
+                Layout.fillWidth: true
+                text: "+"
+                onPressed: if (cdata) cdata.publishers.create()
+            }
         }
 
 
@@ -210,12 +207,6 @@ ScrollView {
             Layout.fillWidth: true
             spacing: 0
 
-            RowLayout {
-                Layout.fillWidth: true
-
-                InputLineNarrow { placeholderText: "genre..." }
-                FlatButton { text: "+" }
-            }
             ListView {
                 Layout.fillWidth: true
 
@@ -232,6 +223,11 @@ ScrollView {
                     border.width: 1
                     z: -1
                 }
+            }
+            FlatButton {
+                Layout.fillWidth: true
+                text: "+"
+                onPressed: if (cdata) cdata.genres.create()
             }
         }
 
@@ -295,6 +291,8 @@ ScrollView {
             onTextEdited: edit = text
             font.pointSize: 10
 
+            placeholderText: "(empty)"
+
             Label {
                 id: delBtn
 
@@ -307,6 +305,7 @@ ScrollView {
                 font.pointSize: 16
                 visible: parent.hovered
                 horizontalAlignment: Text.AlignHCenter
+                font.italic: false
 
                 MouseArea {
                     anchors.fill: parent
