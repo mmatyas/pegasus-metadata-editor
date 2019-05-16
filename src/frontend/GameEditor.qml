@@ -291,7 +291,8 @@ ScrollView {
             width: ListView.view.width
             background: Item {}
 
-            text: modelData
+            text: display
+            onTextEdited: edit = text
             font.pointSize: 10
 
             Label {
@@ -310,7 +311,7 @@ ScrollView {
                 MouseArea {
                     anchors.fill: parent
                     cursorShape: Qt.ArrowCursor
-                    onClicked: console.log("del idx " + index)
+                    onClicked: inputLine.ListView.view.model.remove(index)
                 }
             }
         }

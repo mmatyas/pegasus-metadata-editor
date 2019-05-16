@@ -18,6 +18,7 @@
 #pragma once
 
 #include "ModelData.h"
+#include "utils/StringListModel.h"
 
 #include <QObject>
 
@@ -53,6 +54,12 @@
             emit field##Changed(); \
         }
 
+#define MODEL_PROP(type, name) \
+    private: \
+        Q_PROPERTY(type* name READ name CONSTANT) \
+        type m_##name; \
+        type* name() { return &m_##name; }
+
 #define FIELD_SIGNAL(field) \
     void field##Changed();
 
@@ -61,8 +68,6 @@
 namespace model {
 class CollectionFilter: public QObject {
     Q_OBJECT
-    FIELD_PTR_PROP(QStringList, extensions)
-    FIELD_PTR_PROP(QStringList, files)
     FIELD_PTR_PROP(QString, regex)
 
 public:
@@ -70,12 +75,13 @@ public:
 
 signals:
     // listing the signals manually because Moc is an idiot
-    FIELD_SIGNAL(extensions)
-    FIELD_SIGNAL(files)
     FIELD_SIGNAL(regex)
 
 private:
     modeldata::CollectionFilter* m_data;
+
+    MODEL_PROP(StringListModel, extensions)
+    MODEL_PROP(StringListModel, files)
 };
 
 
@@ -87,15 +93,11 @@ class Collection: public QObject {
     FIELD_PROP(QString, summary)
     FIELD_PROP(QString, description)
 
-    FIELD_PROP(QStringList, directories)
     FIELD_PROP(QString, launch_cmd)
     FIELD_PROP(QString, launch_workdir)
 
     FIELD_PROP(QVariantMap, assets)
     FIELD_PROP(QVariantMap, extra)
-
-    Q_PROPERTY(CollectionFilter* include READ include CONSTANT)
-    Q_PROPERTY(CollectionFilter* exclude READ exclude CONSTANT)
 
 signals:
     FIELD_SIGNAL(name)
@@ -103,7 +105,6 @@ signals:
     FIELD_SIGNAL(summary)
     FIELD_SIGNAL(description)
 
-    FIELD_SIGNAL(directories)
     FIELD_SIGNAL(launch_cmd)
     FIELD_SIGNAL(launch_workdir)
 
@@ -116,11 +117,9 @@ public:
 private:
     modeldata::Collection m_data;
 
-    CollectionFilter m_filter_include;
-    CollectionFilter m_filter_exclude;
-
-    CollectionFilter* include() { return &m_filter_include; }
-    CollectionFilter* exclude() { return &m_filter_exclude; }
+    MODEL_PROP(StringListModel, directories)
+    MODEL_PROP(CollectionFilter, include)
+    MODEL_PROP(CollectionFilter, exclude)
 };
 
 
@@ -138,11 +137,6 @@ class Game: public QObject {
     FIELD_PROP_FLOAT(float, rating)
     FIELD_PROP(QDate, release_date)
 
-    FIELD_PROP(QStringList, developers)
-    FIELD_PROP(QStringList, publishers)
-    FIELD_PROP(QStringList, genres)
-
-    FIELD_PROP(QStringList, files)
     FIELD_PROP(QVariantMap, assets)
     FIELD_PROP(QVariantMap, extra)
 
@@ -158,11 +152,6 @@ signals:
     FIELD_SIGNAL(rating)
     FIELD_SIGNAL(release_date)
 
-    FIELD_SIGNAL(developers)
-    FIELD_SIGNAL(publishers)
-    FIELD_SIGNAL(genres)
-
-    FIELD_SIGNAL(files)
     FIELD_SIGNAL(assets)
     FIELD_SIGNAL(extra)
 
@@ -171,6 +160,11 @@ public:
 
 private:
     modeldata::Game m_data;
+
+    MODEL_PROP(StringListModel, developers)
+    MODEL_PROP(StringListModel, publishers)
+    MODEL_PROP(StringListModel, genres)
+    MODEL_PROP(StringListModel, files)
 };
 } // namespace model
 
