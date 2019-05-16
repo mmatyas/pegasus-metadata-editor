@@ -85,13 +85,13 @@ ScrollView {
                 id: mRating
                 from: 0
                 to: 100
-                value: cdata ? cdata.rating : 0
+                value: cdata ? (cdata.rating * 100) : 0
                 stepSize: 1
                 snapMode: Slider.SnapOnRelease
                 onMoved: set_val("rating", value / 100)
             }
             Label {
-                text: (mRating.value > 0.5) ? (mRating.value + "%") : "--"
+                text: (mRating.value > 0.5) ? (mRating.value.toFixed(0) + "%") : "--"
                 horizontalAlignment: Text.AlignRight
                 Layout.preferredWidth: font.pixelSize * 2
             }
