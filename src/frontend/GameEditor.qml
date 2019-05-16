@@ -123,16 +123,7 @@ ScrollView {
                 Layout.minimumHeight: contentHeight
 
                 model: cdata ? cdata.files : 0
-                delegate: Label {
-                    width: parent.width
-
-                    text: modelData
-                    font.pointSize: 10
-
-                    padding: font.pixelSize * 0.3
-                    leftPadding: font.pixelSize * 0.6
-                    rightPadding: leftPadding
-                }
+                delegate: mListDelegate
 
                 Rectangle {
                     anchors.fill: parent
@@ -165,16 +156,7 @@ ScrollView {
                 Layout.minimumHeight: contentHeight
 
                 model: cdata ? cdata.developers : 0
-                delegate: Label {
-                    width: parent.width
-
-                    text: modelData
-                    font.pointSize: 10
-
-                    padding: font.pixelSize * 0.3
-                    leftPadding: font.pixelSize * 0.6
-                    rightPadding: leftPadding
-                }
+                delegate: mListDelegate
 
                 Rectangle {
                     anchors.fill: parent
@@ -207,16 +189,7 @@ ScrollView {
                 Layout.minimumHeight: contentHeight
 
                 model: cdata ? cdata.publishers : 0
-                delegate: Label {
-                    width: parent.width
-
-                    text: modelData
-                    font.pointSize: 10
-
-                    padding: font.pixelSize * 0.3
-                    leftPadding: font.pixelSize * 0.6
-                    rightPadding: leftPadding
-                }
+                delegate: mListDelegate
 
                 Rectangle {
                     anchors.fill: parent
@@ -249,16 +222,7 @@ ScrollView {
                 Layout.minimumHeight: contentHeight
 
                 model: cdata ? cdata.genres : 0
-                delegate: Label {
-                    width: parent.width
-
-                    text: modelData
-                    font.pointSize: 10
-
-                    padding: font.pixelSize * 0.3
-                    leftPadding: font.pixelSize * 0.6
-                    rightPadding: leftPadding
-                }
+                delegate: mListDelegate
 
                 Rectangle {
                     anchors.fill: parent
@@ -316,5 +280,39 @@ ScrollView {
 
 
         Item { width: 1; height: 1 }
+    }
+
+    Component {
+        id: mListDelegate
+
+        InputLineNarrow {
+            id: inputLine
+
+            width: ListView.view.width
+            background: Item {}
+
+            text: modelData
+            font.pointSize: 10
+
+            Label {
+                id: delBtn
+
+                width: height * 1.25
+                anchors.right: parent.right
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.verticalCenterOffset: -2
+
+                text: "\xd7"
+                font.pointSize: 16
+                visible: parent.hovered
+                horizontalAlignment: Text.AlignHCenter
+
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.ArrowCursor
+                    onClicked: console.log("del idx " + index)
+                }
+            }
+        }
     }
 }
