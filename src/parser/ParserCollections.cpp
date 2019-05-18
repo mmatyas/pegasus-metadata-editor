@@ -38,13 +38,13 @@ void parse_collection_entry(const metafile::Entry& entry, modeldata::Collection&
         return;
 
     if (entry.key.startsWith(QLatin1String("x-"))) {
-        collection.extra[entry.key.mid(2)] = metafile::merge_lines(entry.values);
+        collection.extra[entry.key.mid(2)] = parser::join(entry.values);
         return;
     }
 
     SINGLE_VALUE(shortname, collection.shortname)
-    MERGED_TEXT(summary, collection.summary)
-    MERGED_TEXT(description, collection.description)
+    TEXT_LINES(summary, collection.summary)
+    TEXT_LINES(description, collection.description)
 
     SINGLE_VALUE(launch, collection.launch_cmd)
     SINGLE_VALUE(command, collection.launch_cmd)

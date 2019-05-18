@@ -112,7 +112,7 @@ void parse_game_entry(const metafile::Entry& entry, modeldata::Game& game, Error
         return;
 
     if (entry.key.startsWith(QLatin1String("x-"))) {
-        game.extra[entry.key.mid(2)] = metafile::merge_lines(entry.values);
+        game.extra[entry.key.mid(2)] = parser::join(entry.values);
         return;
     }
 
@@ -126,8 +126,8 @@ void parse_game_entry(const metafile::Entry& entry, modeldata::Game& game, Error
     MULTI_VALUE(genre, game.genres)
     MULTI_VALUE(genres, game.genres)
 
-    MERGED_TEXT(summary, game.summary)
-    MERGED_TEXT(description, game.description)
+    TEXT_LINES(summary, game.summary)
+    TEXT_LINES(description, game.description)
 
     SINGLE_VALUE(launch, game.launch_cmd)
     SINGLE_VALUE(command, game.launch_cmd)

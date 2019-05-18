@@ -57,7 +57,4 @@ void read_file(QFile& file,
                const std::function<void(const Entry&)>& onAttributeFound,
                const std::function<void(const Error&)>& onError);
 
-
-QString merge_lines(const std::vector<QString>&);
-
 } // namespace metafile

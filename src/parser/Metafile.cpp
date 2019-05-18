@@ -146,39 +146,4 @@ void read_stream(QTextStream& stream,
     close_current_attrib();
 }
 
-
-/// Creates a single text from the separate lines. Lines are expected to be
-/// null strings or non-empty trimmed text
-QString merge_lines(const std::vector<QString>& lines)
-{
-    if (lines.empty())
-        return QString();
-
-
-    constexpr QChar SPACE(' ');
-    constexpr QChar NEWLINE('\n');
-
-    int len = 0;
-    for (const QString& line : lines)
-        len += line.length() + 1; // +1 for likely space
-
-    QString out;
-    out.reserve(len);
-
-
-    for (const QString& line : lines) {
-        if (line.isNull()) {
-            out += QStringLiteral("\n\n");
-            continue;
-        }
-
-        if (!out.endsWith(NEWLINE))
-            out += SPACE;
-
-        out += line;
-    }
-
-    return out.trimmed();
-}
-
 } // namespace metafile

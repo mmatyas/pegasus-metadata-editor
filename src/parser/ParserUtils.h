@@ -28,10 +28,9 @@
         target = first_line_of(entry, error_cb); \
         return; \
     }
-#define MERGED_TEXT(name, target) \
+#define TEXT_LINES(name, target) \
     if (entry.key == QLatin1String(#name)) { \
-        target = metafile::merge_lines(entry.values); \
-        replace_newlines(target); \
+        target = parser::join(entry.values); \
         return; \
     }
 #define MULTI_VALUE(name, target) \
@@ -55,5 +54,5 @@
 
 namespace parser {
 QString first_line_of(const metafile::Entry&, ErrorCB);
-void replace_newlines(QString&);
+QString join(const std::vector<QString>&);
 } // namespace parser

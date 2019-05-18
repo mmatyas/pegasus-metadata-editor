@@ -20,6 +20,14 @@
 #include <QRegularExpression>
 
 
+namespace {
+int qstrlen_accumulator(const int acc, const QString& str)
+{
+    return acc + str.length();
+}
+} // namespace
+
+
 namespace parser {
 QString first_line_of(const metafile::Entry& entry, ErrorCB error_cb) {
     Q_ASSERT(!entry.key.isEmpty());
@@ -34,10 +42,22 @@ QString first_line_of(const metafile::Entry& entry, ErrorCB error_cb) {
     return entry.values.front();
 };
 
-void replace_newlines(QString& text)
+QString join(const std::vector<QString>& vec)
 {
-    static const QRegularExpression rx(QStringLiteral("([^\\\\])?\\n +"));
-    Q_ASSERT(rx.isValid());
-    text.replace(rx, QStringLiteral("\\1\\n"));
+    if (vec.empty())
+        return QString();
+
+    const int newline_cnt = static_cast<int>(vec.size()) - 1;
+    const int out_len = std::accumulate(vec.cbegin(), vec.cend(), newline_cnt, qstrlen_accumulator);
+
+    QString out(vec.front());
+    out.reserve(out_len);
+
+    for (auto it = ++vec.cbegin(); it != vec.cend(); ++it) {
+        out.append(QChar('\n'));
+        out.append(*it);
+    }
+
+    return out;
 }
 } // namespace parser
