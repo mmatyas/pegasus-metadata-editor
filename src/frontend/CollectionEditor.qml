@@ -126,45 +126,12 @@ ScrollView {
             text: "Note that the \"include/exclude file\" rules above are still relative to the metadata file!"
             wrapMode: Text.Wrap
         }
-        ColumnLayout {
+        StringListEditor {
             Layout.fillWidth: true
-            spacing: 0
-
-            RowLayout {
-                Layout.fillWidth: true
-
-                InputLineNarrow { placeholderText: "directory path..." }
-                FlatButton { text: "+" }
-            }
-            ListView {
-                Layout.fillWidth: true
-
-                Layout.minimumHeight: contentHeight
-
-                model: cdata ? cdata.directories : 0
-                delegate: Label {
-                    width: parent.width
-
-                    text: modelData
-                    font.pointSize: 10
-
-                    padding: font.pixelSize * 0.3
-                    leftPadding: font.pixelSize * 0.6
-                    rightPadding: leftPadding
-                }
-
-                Rectangle {
-                    anchors.fill: parent
-                    color: "transparent"
-                    opacity: 0.25
-                    border.color: "#000"
-                    border.width: 1
-                    z: -1
-                }
-            }
-
-
-            Item { width: 1; height: 1 }
+            model: root.cdata ? cdata.directories : 0
         }
+
+
+        Item { width: 1; height: 1 }
     }
 }

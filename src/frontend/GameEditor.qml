@@ -107,128 +107,36 @@ ScrollView {
                 + "The paths should be relative to the metadata file or absolute."
             wrapMode: Text.Wrap
         }
-        ColumnLayout {
+        StringListEditor {
             Layout.fillWidth: true
-            spacing: 0
-
-            ListView {
-                Layout.fillWidth: true
-
-                Layout.minimumHeight: contentHeight
-
-                model: cdata ? cdata.files : 0
-                delegate: mListDelegate
-
-                Rectangle {
-                    anchors.fill: parent
-                    color: "transparent"
-                    opacity: 0.25
-                    border.color: "#000"
-                    border.width: 1
-                    z: -1
-                }
-            }
-            FlatButton {
-                Layout.fillWidth: true
-                text: "+"
-                onPressed: if (cdata) cdata.files.create()
-            }
+            model: cdata ? cdata.files : 0
         }
 
 
         BigLabel {
             text: "Developers"
         }
-        ColumnLayout {
+        StringListEditor {
             Layout.fillWidth: true
-            spacing: 0
-
-            ListView {
-                Layout.fillWidth: true
-
-                Layout.minimumHeight: contentHeight
-
-                model: cdata ? cdata.developers : 0
-                delegate: mListDelegate
-
-                Rectangle {
-                    anchors.fill: parent
-                    color: "transparent"
-                    opacity: 0.25
-                    border.color: "#000"
-                    border.width: 1
-                    z: -1
-                }
-            }
-            FlatButton {
-                Layout.fillWidth: true
-                text: "+"
-                onPressed: if (cdata) cdata.developers.create()
-            }
+            model: cdata ? cdata.developers : 0
         }
 
 
         BigLabel {
             text: "Publishers"
         }
-        ColumnLayout {
+        StringListEditor {
             Layout.fillWidth: true
-            spacing: 0
-
-            ListView {
-                Layout.fillWidth: true
-
-                Layout.minimumHeight: contentHeight
-
-                model: cdata ? cdata.publishers : 0
-                delegate: mListDelegate
-
-                Rectangle {
-                    anchors.fill: parent
-                    color: "transparent"
-                    opacity: 0.25
-                    border.color: "#000"
-                    border.width: 1
-                    z: -1
-                }
-            }
-            FlatButton {
-                Layout.fillWidth: true
-                text: "+"
-                onPressed: if (cdata) cdata.publishers.create()
-            }
+            model: cdata ? cdata.publishers : 0
         }
 
 
         BigLabel {
             text: "Genres"
         }
-        ColumnLayout {
+        StringListEditor {
             Layout.fillWidth: true
-            spacing: 0
-
-            ListView {
-                Layout.fillWidth: true
-
-                Layout.minimumHeight: contentHeight
-
-                model: cdata ? cdata.genres : 0
-                delegate: mListDelegate
-
-                Rectangle {
-                    anchors.fill: parent
-                    color: "transparent"
-                    opacity: 0.25
-                    border.color: "#000"
-                    border.width: 1
-                    z: -1
-                }
-            }
-            FlatButton {
-                Layout.fillWidth: true
-                text: "+"
-                onPressed: if (cdata) cdata.genres.create()
-            }
+            model: cdata ? cdata.genres : 0
         }
 
         BigLabel {
@@ -276,43 +184,5 @@ ScrollView {
 
 
         Item { width: 1; height: 1 }
-    }
-
-    Component {
-        id: mListDelegate
-
-        InputLineNarrow {
-            id: inputLine
-
-            width: ListView.view.width
-            background: Item {}
-
-            text: display
-            onTextEdited: edit = text
-            font.pointSize: 10
-
-            placeholderText: "(empty)"
-
-            Label {
-                id: delBtn
-
-                width: height * 1.25
-                anchors.right: parent.right
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: -2
-
-                text: "\xd7"
-                font.pointSize: 16
-                visible: parent.hovered
-                horizontalAlignment: Text.AlignHCenter
-                font.italic: false
-
-                MouseArea {
-                    anchors.fill: parent
-                    cursorShape: Qt.ArrowCursor
-                    onClicked: inputLine.ListView.view.model.remove(index)
-                }
-            }
-        }
     }
 }
