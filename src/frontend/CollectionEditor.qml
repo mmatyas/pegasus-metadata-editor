@@ -95,7 +95,7 @@ ScrollView {
         }
 
 
-        Ruleset {
+        CollectionEditorRuleset {
             header: "Include rules"
             extensionsText: "Include all files with the following extensions:"
             filesText: "In addition, also include the following files (the paths should be relative to the metadata file):"
@@ -103,7 +103,7 @@ ScrollView {
             cdata: root.cdata ? root.cdata.include : null
         }
 
-        Ruleset {
+        CollectionEditorRuleset {
             header: "Exclude rules"
             extensionsText: "Exclude all files with the following extensions:"
             filesText: "In addition, also exclude the following files (the paths should be relative to the metadata file):"
