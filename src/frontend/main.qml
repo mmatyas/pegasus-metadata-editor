@@ -34,12 +34,22 @@ ApplicationWindow {
 
 
     header: ToolBar {
-        Row {
+        RowLayout {
             anchors.fill: parent
 
             ToolButton {
                 icon.source: "qrc:///icons/fa/folder-open.svg"
                 onClicked: filepicker.open()
+            }
+            ToolButton {
+                icon.source: "qrc:///icons/fa/save.svg"
+            }
+
+            Item { Layout.fillWidth: true }
+
+            ToolButton {
+                icon.source: "qrc:///icons/fa/ellipsis-v.svg"
+                onClicked: mMenuMisc.popup()
             }
         }
     }
@@ -117,6 +127,42 @@ ApplicationWindow {
             gameEditor.enabled = false;
 
             Api.openFile(path);
+        }
+    }
+
+    Menu {
+        id: mMenuMisc
+
+        MenuItem {
+            text: "Save As\u2026"
+        }
+
+        MenuSeparator {}
+
+        MenuItem {
+            text: "About\u2026"
+            onTriggered: mAbout.open()
+        }
+    }
+
+    Dialog {
+        id: mAbout
+
+        width: parent.width * 0.5
+        anchors.centerIn: parent
+
+        modal: true
+        standardButtons: Dialog.Ok
+
+        Label {
+            anchors.fill: parent
+            text: "<h2>Pegasus Metadata Editor</h2>"
+                + "<br>A graphical editor for the Metadata files of the Pegasus frontend."
+                + "<br>Visit us at <a href=\"https://pegasus-frontend.org\">https://pegasus-frontend.org</a>!"
+                + "<br><br>Copyright \xa9 2019 Mátyás Mustoha"
+                + "<br><br>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+            wrapMode: Text.Wrap
+            onLinkActivated: Qt.openUrlExternally(link)
         }
     }
 }

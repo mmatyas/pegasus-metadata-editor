@@ -6,6 +6,8 @@
         <file>icons/fa/search.svg</file>
         <file>icons/fa/folder.svg</file>
         <file>icons/fa/folder-open.svg</file>
+        <file>icons/fa/ellipsis-v.svg</file>
+        <file>icons/fa/save.svg</file>
         <file>components/Panel.qml</file>
         <file>components/InputLine.qml</file>
         <file>components/InputArea.qml</file>
