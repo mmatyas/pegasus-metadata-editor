@@ -148,7 +148,7 @@ ApplicationWindow {
     Dialog {
         id: mAbout
 
-        width: parent.width * 0.5
+        width: parent.width * 0.45
         anchors.centerIn: parent
 
         modal: true
