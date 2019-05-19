@@ -44,9 +44,10 @@ ColumnLayout {
 
             text: display
             onTextEdited: edit = text
-            font.pointSize: 10
-
             placeholderText: "(enter value)"
+
+            font.pointSize: 10
+            topPadding: font.pixelSize * 0.6
 
             Label {
                 id: delBtn
