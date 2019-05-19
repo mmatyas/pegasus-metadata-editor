@@ -2,6 +2,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Window 2.0
+import "components"
 
 
 ApplicationWindow {
@@ -36,18 +37,19 @@ ApplicationWindow {
     header: ToolBar {
         RowLayout {
             anchors.fill: parent
+            spacing: 0
 
-            ToolButton {
+            FancyToolButton {
                 icon.source: "qrc:///icons/fa/folder-open.svg"
                 onClicked: filepicker.open()
             }
-            ToolButton {
+            FancyToolButton {
                 icon.source: "qrc:///icons/fa/save.svg"
             }
 
             Item { Layout.fillWidth: true }
 
-            ToolButton {
+            FancyToolButton {
                 icon.source: "qrc:///icons/fa/ellipsis-v.svg"
                 onClicked: mMenuMisc.popup()
             }

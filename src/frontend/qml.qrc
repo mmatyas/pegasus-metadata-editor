@@ -19,5 +19,6 @@
         <file>components/BigLabel.qml</file>
         <file>FilePicker.qml</file>
         <file>StringListEditor.qml</file>
+        <file>components/FancyToolButton.qml</file>
     </qresource>
 </RCC>
