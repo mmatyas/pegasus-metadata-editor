@@ -112,31 +112,58 @@ ScrollView {
             model: cdata ? cdata.files : 0
         }
 
+        Item { width: 1; height: 32 }
 
-        BigLabel {
-            text: "Developers"
-        }
-        StringListEditor {
+        RowLayout {
             Layout.fillWidth: true
-            model: cdata ? cdata.developers : 0
+
+            Label {
+                Layout.minimumWidth: parent.parent.width * 0.25
+                Layout.fillHeight: true
+
+                text: "Developers"
+                font.pointSize: 16
+            }
+            StringListEditor {
+                Layout.fillWidth: true
+                model: cdata ? cdata.developers : 0
+            }
         }
 
+        Item { width: 1; height: 1 }
 
-        BigLabel {
-            text: "Publishers"
-        }
-        StringListEditor {
+        RowLayout {
             Layout.fillWidth: true
-            model: cdata ? cdata.publishers : 0
+
+            Label {
+                Layout.minimumWidth: parent.parent.width * 0.25
+                Layout.fillHeight: true
+
+                text: "Publishers"
+                font.pointSize: 16
+            }
+            StringListEditor {
+                Layout.fillWidth: true
+                model: cdata ? cdata.publishers : 0
+            }
         }
 
+        Item { width: 1; height: 1 }
 
-        BigLabel {
-            text: "Genres"
-        }
-        StringListEditor {
+        RowLayout {
             Layout.fillWidth: true
-            model: cdata ? cdata.genres : 0
+
+            Label {
+                Layout.minimumWidth: parent.parent.width * 0.25
+                Layout.fillHeight: true
+
+                text: "Genres"
+                font.pointSize: 16
+            }
+            StringListEditor {
+                Layout.fillWidth: true
+                model: cdata ? cdata.genres : 0
+            }
         }
 
         BigLabel {
