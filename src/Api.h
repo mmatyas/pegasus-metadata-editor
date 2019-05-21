@@ -45,6 +45,11 @@ signals:
     void errorLogChanged();
     void filePathChanged();
 
+    void openSuccess();
+    void openFail();
+    void saveSuccess();
+    void saveFail();
+
 private:
     QString m_error_log;
     QString m_file_path;

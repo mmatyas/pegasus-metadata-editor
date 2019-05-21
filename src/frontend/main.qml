@@ -121,6 +121,14 @@ ApplicationWindow {
         }
     }
 
+    Connections {
+        target: Api
+        onOpenSuccess: if (Api.errorLog) mWarnings.open();
+        onOpenFail: mError.open();
+        onSaveSuccess: if (Api.errorLog) mWarnings.open();
+        onSaveFail: mError.open();
+    }
+
     FilePicker {
         id: filepicker
         onPick: {
@@ -166,6 +174,53 @@ ApplicationWindow {
                 + "<br><br>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
             wrapMode: Text.Wrap
             onLinkActivated: Qt.openUrlExternally(link)
+        }
+    }
+
+    Dialog {
+        id: mWarnings
+
+        width: parent.width * 0.5
+        anchors.centerIn: parent
+
+        modal: true
+        standardButtons: Dialog.Ok
+
+        bottomPadding: 0
+
+        ScrollView {
+            anchors.fill: parent
+            clip: true
+
+            ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+
+            Label {
+                width: mWarnings.width - mWarnings.leftPadding - mWarnings.rightPadding
+                text: "The file has been opened successfully, but the following"
+                    + " non-critical issues were noticed during the loading:\n\n"
+                    + Api.errorLog
+                wrapMode: Text.Wrap
+            }
+        }
+    }
+
+    Dialog {
+        id: mError
+
+        width: parent.width * 0.45
+        anchors.centerIn: parent
+
+        title: "Error"
+        modal: true
+        standardButtons: Dialog.Ok
+
+        Label {
+            id: mErrorText
+            text: Api.errorLog ? Api.errorLog
+                : "The save/load operation failed for an unknown reason."
+                + " If this problem keeps appearing, please report it to the developers."
+            width: mError.width - mError.leftPadding - mError.rightPadding
+            wrapMode: Text.Wrap
         }
     }
 }

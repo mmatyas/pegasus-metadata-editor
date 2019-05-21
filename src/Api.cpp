@@ -66,13 +66,16 @@ void Api::openFile(QString path)
 
     m_error_log = errors.join(QChar('\n'));
     emit errorLogChanged();
-    if (!m_error_log.isEmpty())
-        qWarning().noquote() << m_error_log;
 
     if (success) {
-        build_qml_layer(parsed, *this);
         m_file_path = path;
         emit filePathChanged();
+
+        build_qml_layer(parsed, *this);
+        emit openSuccess();
+    }
+    else {
+        emit openFail();
     }
 }
 
@@ -87,8 +90,10 @@ void Api::saveAs(QString path)
     if (path.isEmpty())
         return;
 
-    const auto on_error_cb = [](QString){};
-
+    m_error_log.clear();
+    const auto on_error_cb = [this](QString error){
+        m_error_log = error;
+    };
 
     metaformat::EntryRefs entryrefs;
     for (const model::Collection* const coll : m_collections)
@@ -96,5 +101,10 @@ void Api::saveAs(QString path)
     for (const model::Game* const game : m_games)
         entryrefs.games.emplace_back(&game->data());
 
-    metaformat::write(path, entryrefs, on_error_cb);
+    const bool result = metaformat::write(path, entryrefs, on_error_cb);
+    emit errorLogChanged();
+    if (result)
+        emit saveSuccess();
+    else
+        emit saveFail();
 }
