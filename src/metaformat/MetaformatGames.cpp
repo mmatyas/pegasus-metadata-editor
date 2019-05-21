@@ -21,10 +21,11 @@
 #include "MetaformatUtils.h"
 
 #include <QRegularExpression>
+#include <cmath>
 
 
 namespace {
-void try_parse_players(const metafile::Entry& entry, int& target, ErrorCB error_cb)
+void try_parse_players(const metafile::Entry& entry, int& target, metaformat::ParseErrorCB error_cb)
 {
     static const QRegularExpression rx(QStringLiteral("^(\\d+)(-(\\d+))?$"));
     Q_ASSERT(rx.isValid());
@@ -43,7 +44,7 @@ void try_parse_players(const metafile::Entry& entry, int& target, ErrorCB error_
         QStringLiteral("incorrect player count, should be a single number or a number range"));
 }
 
-void try_parse_date(const metafile::Entry& entry, QDate& target, ErrorCB error_cb)
+void try_parse_date(const metafile::Entry& entry, QDate& target, metaformat::ParseErrorCB error_cb)
 {
     static const QRegularExpression rx(QStringLiteral("^(\\d{4})(-(\\d{1,2}))?(-(\\d{1,2}))?$"));
     Q_ASSERT(rx.isValid());
@@ -67,7 +68,7 @@ void try_parse_date(const metafile::Entry& entry, QDate& target, ErrorCB error_c
     error_cb(entry.line, QStringLiteral("incorrect date format, should be YYYY, YYYY-MM or YYYY-MM-DD"));
 }
 
-void try_parse_rating(const metafile::Entry& entry, float& target, ErrorCB error_cb)
+void try_parse_rating(const metafile::Entry& entry, float& target, metaformat::ParseErrorCB error_cb)
 {
     static const QRegularExpression rx_percent(QStringLiteral("^\\d+%$"));
     static const QRegularExpression rx_float(QStringLiteral("^\\d(\\.\\d+)?$"));
@@ -99,20 +100,20 @@ void try_parse_rating(const metafile::Entry& entry, float& target, ErrorCB error
 
 
 namespace metaformat {
-modeldata::Game new_game(const metafile::Entry& entry, ErrorCB error_cb)
+modeldata::Game new_game(const metafile::Entry& entry, ParseErrorCB error_cb)
 {
     modeldata::Game game;
     game.title = first_line_of(entry, error_cb);
     return game;
 }
 
-void parse_game_entry(const metafile::Entry& entry, modeldata::Game& game, ErrorCB error_cb)
+void parse_game_entry(const metafile::Entry& entry, modeldata::Game& game, ParseErrorCB error_cb)
 {
     if (parse_asset_entry_maybe(entry, game.assets, error_cb))
         return;
 
     if (entry.key.startsWith(QLatin1String("x-"))) {
-        game.extra[entry.key.mid(2)] = metaformat::join(entry.values);
+        game.extra[entry.key] = metaformat::join(entry.values);
         return;
     }
 
@@ -148,5 +149,46 @@ void parse_game_entry(const metafile::Entry& entry, modeldata::Game& game, Error
     }
 
     error_cb(entry.line, QStringLiteral("Unknown attribute `%1`").arg(entry.key));
+}
+
+QString render_game(const modeldata::Game& data, WriteErrorCB error_cb)
+{
+    if (data.title.isEmpty()) {
+        error_cb(QStringLiteral("Game %1 has no name, ignored"));
+        return QString();
+    }
+
+    QStringList lines;
+    lines.append(QStringLiteral("game: ") + data.title);
+
+    RENDER_LIST(file, files, files)
+
+    RENDER_TEXT(summary, summary)
+    RENDER_TEXT(description, description)
+
+    RENDER_LIST(developer, developers, developers)
+    RENDER_LIST(publisher, publishers, developers)
+    RENDER_LIST(genre, genres, genres)
+
+    if (data.release_date.isValid())
+        lines.append(QStringLiteral("release: ") + data.release_date.toString(QStringLiteral("yyyy-MM-dd")));
+
+    if (data.max_players)
+        lines.append(QStringLiteral("players: ") + QString::number(data.max_players));
+
+    if (data.rating > 0.0001f) {
+        const int percent = static_cast<int>(std::roundf(data.rating * 100.f));
+        lines.append(QStringLiteral("rating: ") + QString::number(percent) + QChar('%'));
+    }
+
+    RENDER_SINGLE(launch, launch_cmd)
+    RENDER_SINGLE(workdir, launch_workdir)
+
+    lines.append(render_assets(data.assets));
+
+    for (auto it = data.extra.cbegin(); it != data.extra.cend(); ++it)
+        lines.append(it.key() + QStringLiteral(": ") + it.value().toString());
+
+    return lines.join(QChar('\n'));
 }
 } // namespace metaformat

@@ -23,6 +23,7 @@
 
 
 namespace metaformat {
-modeldata::Game new_game(const metafile::Entry&, ErrorCB);
-void parse_game_entry(const metafile::Entry&, modeldata::Game&, ErrorCB);
+modeldata::Game new_game(const metafile::Entry&, ParseErrorCB);
+void parse_game_entry(const metafile::Entry&, modeldata::Game&, ParseErrorCB);
+QString render_game(const modeldata::Game&, WriteErrorCB);
 } // namespace metaformat

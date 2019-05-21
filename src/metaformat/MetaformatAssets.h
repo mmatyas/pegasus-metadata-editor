@@ -24,5 +24,6 @@
 
 
 namespace metaformat {
-bool parse_asset_entry_maybe(const metafile::Entry&, QVariantMap&, ErrorCB);
+bool parse_asset_entry_maybe(const metafile::Entry&, QVariantMap&, ParseErrorCB);
+QStringList render_assets(const QVariantMap&);
 } // namespace metaformat

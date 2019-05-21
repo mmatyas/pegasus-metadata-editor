@@ -21,6 +21,8 @@
 
 
 namespace {
+static const auto ASSET_PREFIX(QStringLiteral("assets."));
+
 bool is_multiasset(const QString& asset_key)
 {
     return asset_key == QLatin1String("video")
@@ -32,10 +34,8 @@ bool is_multiasset(const QString& asset_key)
 
 
 namespace metaformat {
-bool parse_asset_entry_maybe(const metafile::Entry& entry, QVariantMap& assets, ErrorCB error_cb)
+bool parse_asset_entry_maybe(const metafile::Entry& entry, QVariantMap& assets, ParseErrorCB error_cb)
 {
-    static const auto ASSET_PREFIX = QStringLiteral("assets.");
-
     if (!entry.key.startsWith(ASSET_PREFIX))
         return false;
 
@@ -60,5 +60,15 @@ bool parse_asset_entry_maybe(const metafile::Entry& entry, QVariantMap& assets, 
 
     assets.insert(asset_key, asset_val);
     return true;
+}
+
+QStringList render_assets(const QVariantMap& map)
+{
+    QStringList out;
+
+    for (auto it = map.cbegin(); it != map.cend(); ++it)
+        out.append(ASSET_PREFIX + it.key() + QStringLiteral(": ") + it.value().toString());
+
+    return out;
 }
 } // namespace metaformat

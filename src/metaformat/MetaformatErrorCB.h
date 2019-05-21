@@ -20,4 +20,8 @@
 #include <QString>
 #include <functional>
 
-using ErrorCB = const std::function<void(const size_t, const QString&)>&;
+
+namespace metaformat {
+using ParseErrorCB = const std::function<void(const size_t, const QString&)>&;
+using WriteErrorCB = const std::function<void(const QString&)>&;
+} // namespace metaformat

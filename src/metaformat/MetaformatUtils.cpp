@@ -29,7 +29,7 @@ int qstrlen_accumulator(const int acc, const QString& str)
 
 
 namespace metaformat {
-QString first_line_of(const metafile::Entry& entry, ErrorCB error_cb) {
+QString first_line_of(const metafile::Entry& entry, ParseErrorCB error_cb) {
     Q_ASSERT(!entry.key.isEmpty());
     Q_ASSERT(!entry.values.empty());
 

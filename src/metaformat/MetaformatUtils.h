@@ -21,6 +21,7 @@
 #include "MetaformatErrorCB.h"
 
 #include <QString>
+#include <QVector>
 
 
 #define SINGLE_VALUE(name, target) \
@@ -52,7 +53,40 @@
     }
 
 
+#define RENDER_SINGLE(name, field) \
+    if (!data.field.isEmpty()) { \
+        lines.append(QStringLiteral(#name ": ") + data.field); \
+    }
+#define RENDER_TEXT(name, field) \
+    if (!data.field.isEmpty()) { \
+        lines.append(QStringLiteral(#name ":")); \
+        const QVector<QStringRef> sublines = data.field.splitRef(QChar('\n')); \
+        for (const QStringRef& ref : sublines) \
+            if (ref.isEmpty()) \
+                lines.append(QStringLiteral("  .")); \
+            else \
+                lines.append(QStringLiteral("  ") + ref); \
+    }
+#define RENDER_LIST(name_single, name_multi, field) \
+    if (data.field.size() == 1) { \
+        lines.append(QStringLiteral(#name_single ": ") + data.field.first()); \
+    } \
+    if (data.field.size() > 1) { \
+        lines.append(QStringLiteral(#name_multi ":")); \
+        for (const QString& entry : data.field) \
+            lines.append(QStringLiteral("  ") + entry); \
+    }
+#define RENDER_EXTS(name_single, name_multi, field) \
+    if (!data.field.empty()) { \
+        const QString merged = data.field.join(QLatin1String(", ")); \
+        if (data.field.size() == 1) \
+            lines.append(QStringLiteral(#name_single ": ") + merged); \
+        else \
+            lines.append(QStringLiteral(#name_multi ": ") + merged); \
+    }
+
+
 namespace metaformat {
-QString first_line_of(const metafile::Entry&, ErrorCB);
+QString first_line_of(const metafile::Entry&, ParseErrorCB);
 QString join(const std::vector<QString>&);
 } // namespace metaformat

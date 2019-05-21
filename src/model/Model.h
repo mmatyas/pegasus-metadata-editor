@@ -114,6 +114,8 @@ signals:
 public:
     explicit Collection(modeldata::Collection, QObject* parent = nullptr);
 
+    const modeldata::Collection& data() const { return m_data; }
+
 private:
     modeldata::Collection m_data;
 
@@ -157,6 +159,8 @@ signals:
 
 public:
     explicit Game(modeldata::Game, QObject* parent = nullptr);
+
+    const modeldata::Game& data() const { return m_data; }
 
 private:
     modeldata::Game m_data;

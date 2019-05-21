@@ -45,6 +45,7 @@ ApplicationWindow {
             }
             FancyToolButton {
                 icon.source: "qrc:///icons/fa/save.svg"
+                onClicked: Api.save()
             }
 
             Item { Layout.fillWidth: true }

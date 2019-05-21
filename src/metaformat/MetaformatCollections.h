@@ -23,6 +23,7 @@
 
 
 namespace metaformat {
-modeldata::Collection new_collection(const metafile::Entry&, ErrorCB);
-void parse_collection_entry(const metafile::Entry&, modeldata::Collection&, ErrorCB);
+modeldata::Collection new_collection(const metafile::Entry&, ParseErrorCB);
+void parse_collection_entry(const metafile::Entry&, modeldata::Collection&, ParseErrorCB);
+QString render_collection(const modeldata::Collection&, WriteErrorCB);
 } // namespace metaformat

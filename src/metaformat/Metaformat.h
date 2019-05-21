@@ -29,6 +29,11 @@ struct Entries {
     std::vector<modeldata::Game> games;
     std::vector<modeldata::Collection> collections;
 };
+struct EntryRefs {
+    std::vector<const modeldata::Game*> games;
+    std::vector<const modeldata::Collection*> collections;
+};
 
-bool parse(const QString&, Entries&, ErrorCB);
+bool parse(const QString&, Entries&, ParseErrorCB);
+bool write(const QString&, const EntryRefs&, WriteErrorCB);
 } // namespace metaformat

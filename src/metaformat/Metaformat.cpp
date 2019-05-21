@@ -21,6 +21,9 @@
 #include "MetaformatCollections.h"
 #include "MetaformatGames.h"
 
+#include <QFile>
+#include <QTextStream>
+
 
 namespace {
 enum class ParsedBlockType: unsigned char {
@@ -32,7 +35,7 @@ enum class ParsedBlockType: unsigned char {
 
 
 namespace metaformat {
-bool parse(const QString& path, Entries& out, ErrorCB error_cb)
+bool parse(const QString& path, Entries& out, ParseErrorCB error_cb)
 {
     auto parsed_block_type = ParsedBlockType::UNDEFINED;
 
@@ -71,5 +74,45 @@ bool parse(const QString& path, Entries& out, ErrorCB error_cb)
 
 
     return metafile::read_file(path, on_entry, on_error);
+}
+
+bool write(const QString& path, const EntryRefs& entries, WriteErrorCB error_cb)
+{
+    QFile file(path);
+    if (!file.open(QFile::WriteOnly | QFile::Text)) {
+        error_cb(QStringLiteral("Could not open '%1' for writing. Maybe the file or the location is write-protected?"));
+        return false;
+    }
+
+    QTextStream stream(&file);
+    stream.setCodec("UTF-8");
+
+    QLatin1String separator("");
+    const auto write_entry = [&stream, &separator](QString text){
+        if (!text.isEmpty()) {
+            stream << separator;
+            stream << text;
+            separator = QLatin1String("\n\n\n");
+        }
+    };
+
+
+    const auto on_error_cb = [](QString){};
+
+
+    for (const modeldata::Collection* const data : entries.collections)
+        write_entry(render_collection(*data, on_error_cb));
+
+    for (const modeldata::Game* const data : entries.games)
+        write_entry(render_game(*data, on_error_cb));
+
+    stream << QChar('\n');
+
+    if (stream.status() != QTextStream::Ok) {
+        error_cb(QStringLiteral("Could not save '%1'. %2").arg(path, stream.device()->errorString()));
+        return false;
+    }
+
+    return true;
 }
 } // namespace metaformat

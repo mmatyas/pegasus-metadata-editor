@@ -25,20 +25,20 @@
 
 
 namespace metaformat {
-modeldata::Collection new_collection(const metafile::Entry& entry, ErrorCB error_cb)
+modeldata::Collection new_collection(const metafile::Entry& entry, ParseErrorCB error_cb)
 {
     modeldata::Collection coll;
     coll.name = first_line_of(entry, error_cb);
     return coll;
 }
 
-void parse_collection_entry(const metafile::Entry& entry, modeldata::Collection& collection, ErrorCB error_cb)
+void parse_collection_entry(const metafile::Entry& entry, modeldata::Collection& collection, ParseErrorCB error_cb)
 {
     if (parse_asset_entry_maybe(entry, collection.assets, error_cb))
         return;
 
     if (entry.key.startsWith(QLatin1String("x-"))) {
-        collection.extra[entry.key.mid(2)] = metaformat::join(entry.values);
+        collection.extra[entry.key] = metaformat::join(entry.values);
         return;
     }
 
@@ -68,5 +68,40 @@ void parse_collection_entry(const metafile::Entry& entry, modeldata::Collection&
     EXT_LIST(ignore-extensions, collection.exclude.extensions)
 
     error_cb(entry.line, QStringLiteral("Unknown attribute `%1`").arg(entry.key));
+}
+
+QString render_collection(const modeldata::Collection& data, WriteErrorCB error_cb)
+{
+    if (data.name.isEmpty()) {
+        error_cb(QStringLiteral("Collection %1 has no name, ignored"));
+        return QString();
+    }
+
+    QStringList lines;
+    lines.append(QStringLiteral("collection: ") + data.name);
+
+    RENDER_SINGLE(shortname, shortname)
+    RENDER_TEXT(summary, summary)
+    RENDER_TEXT(description, description)
+
+    RENDER_LIST(directory, directories, directories)
+
+    RENDER_EXTS(extension, extensions, include.extensions)
+    RENDER_LIST(file, files, include.files)
+    RENDER_SINGLE(regex, include.regex)
+
+    RENDER_EXTS(ignore-extension, ignore-extensions, exclude.extensions)
+    RENDER_LIST(ignore-file, ignore-files, exclude.files)
+    RENDER_SINGLE(ignore-regex, exclude.regex)
+
+    RENDER_SINGLE(launch, launch_cmd)
+    RENDER_SINGLE(workdir, launch_workdir)
+
+    lines.append(render_assets(data.assets));
+
+    for (auto it = data.extra.cbegin(); it != data.extra.cend(); ++it)
+        lines.append(it.key() + QStringLiteral(": ") + it.value().toString());
+
+    return lines.join(QChar('\n'));
 }
 } // namespace metaformat

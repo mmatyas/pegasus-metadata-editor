@@ -86,4 +86,15 @@ void Api::saveAs(QString path)
     Q_ASSERT(!path.isEmpty());
     if (path.isEmpty())
         return;
+
+    const auto on_error_cb = [](QString){};
+
+
+    metaformat::EntryRefs entryrefs;
+    for (const model::Collection* const coll : m_collections)
+        entryrefs.collections.emplace_back(&coll->data());
+    for (const model::Game* const game : m_games)
+        entryrefs.games.emplace_back(&game->data());
+
+    metaformat::write(path, entryrefs, on_error_cb);
 }
