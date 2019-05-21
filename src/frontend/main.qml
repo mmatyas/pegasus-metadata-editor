@@ -46,6 +46,7 @@ ApplicationWindow {
             FancyToolButton {
                 icon.source: "qrc:///icons/fa/save.svg"
                 onClicked: Api.save()
+                enabled: false
             }
 
             Item { Layout.fillWidth: true }
@@ -146,6 +147,7 @@ ApplicationWindow {
 
         MenuItem {
             text: "Save As\u2026"
+            enabled: false
         }
 
         MenuSeparator {}
