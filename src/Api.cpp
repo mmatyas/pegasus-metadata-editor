@@ -50,12 +50,14 @@ Api::Api(QObject* parent)
 
 void Api::openFile(QString path)
 {
-    QStringList errors;
+    Q_ASSERT(!path.isEmpty());
+    if (path.isEmpty())
+        return;
 
+    QStringList errors;
     const auto render_line_error = [&errors](const size_t linenum, const QString& message) {
         errors += QStringLiteral("Line %1: %2").arg(QString::number(linenum), message);
     };
-
 
     parser::Entries parsed;
     const bool success = parser::parse(path, parsed, render_line_error);
@@ -64,10 +66,24 @@ void Api::openFile(QString path)
 
     m_error_log = errors.join(QChar('\n'));
     emit errorLogChanged();
-
     if (!m_error_log.isEmpty())
         qWarning().noquote() << m_error_log;
 
-    if (success)
+    if (success) {
         build_qml_layer(parsed, *this);
+        m_file_path = path;
+        emit filePathChanged();
+    }
+}
+
+void Api::save()
+{
+    saveAs(m_file_path);
+}
+
+void Api::saveAs(QString path)
+{
+    Q_ASSERT(!path.isEmpty());
+    if (path.isEmpty())
+        return;
 }

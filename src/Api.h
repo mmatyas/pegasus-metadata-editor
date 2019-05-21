@@ -27,6 +27,7 @@ class Api: public QObject {
     Q_OBJECT
 
     Q_PROPERTY(QString errorLog READ errorLog NOTIFY errorLogChanged)
+    Q_PROPERTY(QString filePath READ filePath NOTIFY filePathChanged)
     QML_OBJMODEL_PROPERTY(model::Collection, collections)
     QML_OBJMODEL_PROPERTY(model::Game, games)
 
@@ -34,12 +35,17 @@ public:
     explicit Api(QObject* parent = nullptr);
 
     Q_INVOKABLE void openFile(QString path);
+    Q_INVOKABLE void save();
+    Q_INVOKABLE void saveAs(QString path);
 
     const QString& errorLog() const { return m_error_log; }
+    const QString& filePath() const { return m_file_path; }
 
 signals:
     void errorLogChanged();
+    void filePathChanged();
 
 private:
     QString m_error_log;
+    QString m_file_path;
 };
