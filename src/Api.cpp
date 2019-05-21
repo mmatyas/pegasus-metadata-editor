@@ -17,11 +17,11 @@
 
 #include "Api.h"
 
-#include "parser/Parser.h"
+#include "metaformat/Metaformat.h"
 
 
 namespace {
-void build_qml_layer(parser::Entries& data, Api& api)
+void build_qml_layer(metaformat::Entries& data, Api& api)
 {
 #define GENERATE(type, field) \
     { \
@@ -59,8 +59,8 @@ void Api::openFile(QString path)
         errors += QStringLiteral("Line %1: %2").arg(QString::number(linenum), message);
     };
 
-    parser::Entries parsed;
-    const bool success = parser::parse(path, parsed, render_line_error);
+    metaformat::Entries parsed;
+    const bool success = metaformat::parse(path, parsed, render_line_error);
     if (!success)
         m_error_log = QStringLiteral("Error: Could not open the file");
 

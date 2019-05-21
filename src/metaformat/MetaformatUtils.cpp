@@ -15,7 +15,7 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-#include "ParserUtils.h"
+#include "MetaformatUtils.h"
 
 #include <QRegularExpression>
 
@@ -28,7 +28,7 @@ int qstrlen_accumulator(const int acc, const QString& str)
 } // namespace
 
 
-namespace parser {
+namespace metaformat {
 QString first_line_of(const metafile::Entry& entry, ErrorCB error_cb) {
     Q_ASSERT(!entry.key.isEmpty());
     Q_ASSERT(!entry.values.empty());
@@ -60,4 +60,4 @@ QString join(const std::vector<QString>& vec)
 
     return out;
 }
-} // namespace parser
+} // namespace metaformat

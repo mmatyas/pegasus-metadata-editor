@@ -15,11 +15,11 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-#include "Parser.h"
+#include "Metaformat.h"
 
 #include "Metafile.h"
-#include "ParserCollections.h"
-#include "ParserGames.h"
+#include "MetaformatCollections.h"
+#include "MetaformatGames.h"
 
 
 namespace {
@@ -31,7 +31,7 @@ enum class ParsedBlockType: unsigned char {
 } // namespace
 
 
-namespace parser {
+namespace metaformat {
 bool parse(const QString& path, Entries& out, ErrorCB error_cb)
 {
     auto parsed_block_type = ParsedBlockType::UNDEFINED;
@@ -46,7 +46,7 @@ bool parse(const QString& path, Entries& out, ErrorCB error_cb)
         }
         if (entry.key == QLatin1String("game")) {
             // TODO: Find next by name
-            out.games.emplace_back(parser::new_game(entry, error_cb));
+            out.games.emplace_back(new_game(entry, error_cb));
             parsed_block_type = ParsedBlockType::GAME;
             return;
         }
@@ -57,11 +57,11 @@ bool parse(const QString& path, Entries& out, ErrorCB error_cb)
                 return;
             case ParsedBlockType::COLLECTION:
                 Q_ASSERT(!out.collections.empty());
-                parser::parse_collection_entry(entry, out.collections.back(), error_cb);
+                parse_collection_entry(entry, out.collections.back(), error_cb);
                 break;
             case ParsedBlockType::GAME:
                 Q_ASSERT(!out.games.empty());
-                parser::parse_game_entry(entry, out.games.back(), error_cb);
+                parse_game_entry(entry, out.games.back(), error_cb);
                 break;
         }
     };
@@ -72,4 +72,4 @@ bool parse(const QString& path, Entries& out, ErrorCB error_cb)
 
     return metafile::read_file(path, on_entry, on_error);
 }
-} // namespace parser
+} // namespace metaformat

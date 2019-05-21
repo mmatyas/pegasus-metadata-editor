@@ -17,12 +17,18 @@
 
 #pragma once
 
-#include "Metafile.h"
-#include "ParserErrorCB.h"
+#include "MetaformatErrorCB.h"
+#include "model/ModelData.h"
 
-#include <QVariantMap>
+#include <vector>
+#include <QString>
 
 
-namespace parser {
-bool parse_asset_entry_maybe(const metafile::Entry&, QVariantMap&, ErrorCB);
-} // namespace parser
+namespace metaformat {
+struct Entries {
+    std::vector<modeldata::Game> games;
+    std::vector<modeldata::Collection> collections;
+};
+
+bool parse(const QString&, Entries&, ErrorCB);
+} // namespace metaformat

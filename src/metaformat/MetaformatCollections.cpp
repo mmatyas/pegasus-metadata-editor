@@ -15,16 +15,16 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-#include "ParserCollections.h"
+#include "MetaformatCollections.h"
 
-#include "ParserAssets.h"
-#include "ParserUtils.h"
+#include "MetaformatAssets.h"
+#include "MetaformatUtils.h"
 
 #include <QString>
 #include <QVector>
 
 
-namespace parser {
+namespace metaformat {
 modeldata::Collection new_collection(const metafile::Entry& entry, ErrorCB error_cb)
 {
     modeldata::Collection coll;
@@ -38,7 +38,7 @@ void parse_collection_entry(const metafile::Entry& entry, modeldata::Collection&
         return;
 
     if (entry.key.startsWith(QLatin1String("x-"))) {
-        collection.extra[entry.key.mid(2)] = parser::join(entry.values);
+        collection.extra[entry.key.mid(2)] = metaformat::join(entry.values);
         return;
     }
 
@@ -69,4 +69,4 @@ void parse_collection_entry(const metafile::Entry& entry, modeldata::Collection&
 
     error_cb(entry.line, QStringLiteral("Unknown attribute `%1`").arg(entry.key));
 }
-} // namespace parser
+} // namespace metaformat

@@ -18,11 +18,11 @@
 #pragma once
 
 #include "Metafile.h"
-#include "ParserErrorCB.h"
-#include "model/ModelData.h"
+#include "MetaformatErrorCB.h"
+
+#include <QVariantMap>
 
 
-namespace parser {
-modeldata::Collection new_collection(const metafile::Entry&, ErrorCB);
-void parse_collection_entry(const metafile::Entry&, modeldata::Collection&, ErrorCB);
-} // namespace parser
+namespace metaformat {
+bool parse_asset_entry_maybe(const metafile::Entry&, QVariantMap&, ErrorCB);
+} // namespace metaformat

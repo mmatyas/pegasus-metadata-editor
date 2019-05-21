@@ -18,7 +18,7 @@
 #pragma once
 
 #include "Metafile.h"
-#include "ParserErrorCB.h"
+#include "MetaformatErrorCB.h"
 
 #include <QString>
 
@@ -30,7 +30,7 @@
     }
 #define TEXT_LINES(name, target) \
     if (entry.key == QLatin1String(#name)) { \
-        target = parser::join(entry.values); \
+        target = metaformat::join(entry.values); \
         return; \
     }
 #define MULTI_VALUE(name, target) \
@@ -52,7 +52,7 @@
     }
 
 
-namespace parser {
+namespace metaformat {
 QString first_line_of(const metafile::Entry&, ErrorCB);
 QString join(const std::vector<QString>&);
-} // namespace parser
+} // namespace metaformat

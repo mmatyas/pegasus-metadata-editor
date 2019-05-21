@@ -15,10 +15,10 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-#include "ParserGames.h"
+#include "MetaformatGames.h"
 
-#include "ParserAssets.h"
-#include "ParserUtils.h"
+#include "MetaformatAssets.h"
+#include "MetaformatUtils.h"
 
 #include <QRegularExpression>
 
@@ -29,7 +29,7 @@ void try_parse_players(const metafile::Entry& entry, int& target, ErrorCB error_
     static const QRegularExpression rx(QStringLiteral("^(\\d+)(-(\\d+))?$"));
     Q_ASSERT(rx.isValid());
 
-    const QRegularExpressionMatch rx_match = rx.match(parser::first_line_of(entry, error_cb));
+    const QRegularExpressionMatch rx_match = rx.match(metaformat::first_line_of(entry, error_cb));
     if (rx_match.hasMatch()) {
         Q_ASSERT(!rx_match.captured(1).isEmpty());
         target = rx_match.captured(1).toInt();
@@ -48,7 +48,7 @@ void try_parse_date(const metafile::Entry& entry, QDate& target, ErrorCB error_c
     static const QRegularExpression rx(QStringLiteral("^(\\d{4})(-(\\d{1,2}))?(-(\\d{1,2}))?$"));
     Q_ASSERT(rx.isValid());
 
-    const QRegularExpressionMatch rx_match = rx.match(parser::first_line_of(entry, error_cb));
+    const QRegularExpressionMatch rx_match = rx.match(metaformat::first_line_of(entry, error_cb));
     if (rx_match.hasMatch()) {
         const int y = rx_match.captured(1).toInt();
 
@@ -74,7 +74,7 @@ void try_parse_rating(const metafile::Entry& entry, float& target, ErrorCB error
     Q_ASSERT(rx_percent.isValid());
     Q_ASSERT(rx_float.isValid());
 
-    const QString rating_str = parser::first_line_of(entry, error_cb);
+    const QString rating_str = metaformat::first_line_of(entry, error_cb);
 
     QRegularExpressionMatch rx_match = rx_percent.match(rating_str);
     if (rx_match.hasMatch()) {
@@ -98,7 +98,7 @@ void try_parse_rating(const metafile::Entry& entry, float& target, ErrorCB error
 } // namespace
 
 
-namespace parser {
+namespace metaformat {
 modeldata::Game new_game(const metafile::Entry& entry, ErrorCB error_cb)
 {
     modeldata::Game game;
@@ -112,7 +112,7 @@ void parse_game_entry(const metafile::Entry& entry, modeldata::Game& game, Error
         return;
 
     if (entry.key.startsWith(QLatin1String("x-"))) {
-        game.extra[entry.key.mid(2)] = parser::join(entry.values);
+        game.extra[entry.key.mid(2)] = metaformat::join(entry.values);
         return;
     }
 
@@ -149,4 +149,4 @@ void parse_game_entry(const metafile::Entry& entry, modeldata::Game& game, Error
 
     error_cb(entry.line, QStringLiteral("Unknown attribute `%1`").arg(entry.key));
 }
-} // namespace parser
+} // namespace metaformat

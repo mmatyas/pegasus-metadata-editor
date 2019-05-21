@@ -15,9 +15,9 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-#include "ParserAssets.h"
+#include "MetaformatAssets.h"
 
-#include "ParserUtils.h"
+#include "MetaformatUtils.h"
 
 
 namespace {
@@ -31,7 +31,7 @@ bool is_multiasset(const QString& asset_key)
 } // namespace
 
 
-namespace parser {
+namespace metaformat {
 bool parse_asset_entry_maybe(const metafile::Entry& entry, QVariantMap& assets, ErrorCB error_cb)
 {
     static const auto ASSET_PREFIX = QStringLiteral("assets.");
@@ -61,4 +61,4 @@ bool parse_asset_entry_maybe(const metafile::Entry& entry, QVariantMap& assets, 
     assets.insert(asset_key, asset_val);
     return true;
 }
-} // namespace parser
+} // namespace metaformat

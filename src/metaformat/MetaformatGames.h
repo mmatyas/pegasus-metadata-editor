@@ -18,11 +18,11 @@
 #pragma once
 
 #include "Metafile.h"
-#include "ParserErrorCB.h"
+#include "MetaformatErrorCB.h"
 #include "model/ModelData.h"
 
 
-namespace parser {
+namespace metaformat {
 modeldata::Game new_game(const metafile::Entry&, ErrorCB);
 void parse_game_entry(const metafile::Entry&, modeldata::Game&, ErrorCB);
-} // namespace parser
+} // namespace metaformat
