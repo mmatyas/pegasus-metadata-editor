@@ -53,9 +53,13 @@ ApplicationWindow {
             spacing: 0
 
             FancyToolButton {
-                icon.source: "qrc:///icons/fa/folder-open.svg"
-                onClicked: filepicker.open()
+                icon.source: "qrc:///icons/fa/file.svg"
             }
+            FancyToolButton {
+                icon.source: "qrc:///icons/fa/folder-open.svg"
+                onClicked: mLoadDialog.open()
+            }
+            ToolSeparator{}
             FancyToolButton {
                 icon.source: "qrc:///icons/fa/save.svg"
                 onClicked: Api.save()
@@ -92,6 +96,10 @@ ApplicationWindow {
         }
     }
 
+
+    WelcomeText {
+        visible: !mEditor.visible
+    }
 
     RowLayout {
         id: mEditor
@@ -146,7 +154,6 @@ ApplicationWindow {
             }
         }
 
-
         CollectionEditor {
             id: collectionEditor
             enabled: false
@@ -163,7 +170,7 @@ ApplicationWindow {
 
 
     LoadDialog {
-        id: filepicker
+        id: mLoadDialog
         onPick: Api.openFile(path)
     }
     SaveAsDialog {

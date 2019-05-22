@@ -4,6 +4,7 @@
         <file>ModelBox.qml</file>
         <file>CollectionEditor.qml</file>
         <file>icons/fa/search.svg</file>
+        <file>icons/fa/file.svg</file>
         <file>icons/fa/folder.svg</file>
         <file>icons/fa/folder-open.svg</file>
         <file>icons/fa/ellipsis-v.svg</file>
@@ -22,5 +23,6 @@
         <file>LoadDialog.qml</file>
         <file>SaveAsDialog.qml</file>
         <file>AboutDialog.qml</file>
+        <file>WelcomeText.qml</file>
     </qresource>
 </RCC>
