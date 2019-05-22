@@ -8,7 +8,7 @@ import "components"
 ApplicationWindow {
     id: root
 
-    title: qsTr("Pegasus Metadata Editor")
+    title: "Pegasus Metadata Editor" + (Api.filePath ? " - " + Api.filePath : "")
     width: 1024
     height: 600
 
