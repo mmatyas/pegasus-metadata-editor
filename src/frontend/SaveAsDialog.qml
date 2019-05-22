@@ -67,7 +67,7 @@ Popup {
             }
         }
 
-        Item { width: 1;  height: 4 }
+        Item { width: 1;  height: 8 }
 
         RowLayout {
             Layout.fillWidth: true
@@ -122,7 +122,7 @@ Popup {
         modal: true
         standardButtons: Dialog.Yes | Dialog.Cancel
         anchors.centerIn: parent
-        title: "Warning"
+        title: "Warning!"
 
         onAccepted: {
             close();

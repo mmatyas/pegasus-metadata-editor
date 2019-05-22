@@ -90,9 +90,9 @@ void Api::saveAs(QString path)
     if (path.isEmpty())
         return;
 
-    m_error_log.clear();
-    const auto on_error_cb = [this](QString error){
-        m_error_log = error;
+    QStringList errors;
+    const auto on_error_cb = [&errors](QString error){
+        errors << error;
     };
 
     metaformat::EntryRefs entryrefs;
@@ -102,7 +102,10 @@ void Api::saveAs(QString path)
         entryrefs.games.emplace_back(&game->data());
 
     const bool result = metaformat::write(path, entryrefs, on_error_cb);
+
+    m_error_log = errors.join(QChar('\n'));
     emit errorLogChanged();
+
     if (result)
         emit saveSuccess();
     else

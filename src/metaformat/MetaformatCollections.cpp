@@ -67,13 +67,13 @@ void parse_collection_entry(const metafile::Entry& entry, modeldata::Collection&
     EXT_LIST(ignore-extension, collection.exclude.extensions)
     EXT_LIST(ignore-extensions, collection.exclude.extensions)
 
-    error_cb(entry.line, QStringLiteral("Unknown attribute `%1`").arg(entry.key));
+    error_cb(entry.line, QStringLiteral("Unknown attribute `%1`.").arg(entry.key));
 }
 
 QString render_collection(const modeldata::Collection& data, WriteErrorCB error_cb)
 {
     if (data.name.isEmpty()) {
-        error_cb(QStringLiteral("Collection %1 has no name, ignored"));
+        error_cb(QStringLiteral("Collection #%1 has no name, entry ignored."));
         return QString();
     }
 

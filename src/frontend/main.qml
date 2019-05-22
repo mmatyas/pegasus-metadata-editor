@@ -58,6 +58,23 @@ ApplicationWindow {
         }
     }
 
+    Menu {
+        id: mMenuMisc
+
+        MenuItem {
+            text: "Save As\u2026"
+            enabled: false
+            onTriggered: mSaveAsDialog.open()
+        }
+
+        MenuSeparator {}
+
+        MenuItem {
+            text: "About\u2026"
+            onTriggered: mAbout.open()
+        }
+    }
+
 
     RowLayout {
         anchors.fill: parent
@@ -124,10 +141,20 @@ ApplicationWindow {
 
     Connections {
         target: Api
-        onOpenSuccess: if (Api.errorLog) mWarnings.open();
-        onOpenFail: mError.open();
-        onSaveSuccess: if (Api.errorLog) mWarnings.open();
-        onSaveFail: mError.open();
+        onOpenSuccess: {
+            if (Api.errorLog) {
+                mWarnings.isLoading = true;
+                mWarnings.open();
+            }
+        }
+        onSaveSuccess: {
+            if (Api.errorLog) {
+                mWarnings.isLoading = false;
+                mWarnings.open();
+            }
+        }
+        onOpenFail: mError.open()
+        onSaveFail: mError.open()
     }
 
     FilePicker {
@@ -145,23 +172,6 @@ ApplicationWindow {
     SaveAsDialog {
         id: mSaveAsDialog
         onPick: Api.saveAs(path)
-    }
-
-    Menu {
-        id: mMenuMisc
-
-        MenuItem {
-            text: "Save As\u2026"
-            enabled: false
-            onTriggered: mSaveAsDialog.open()
-        }
-
-        MenuSeparator {}
-
-        MenuItem {
-            text: "About\u2026"
-            onTriggered: mAbout.open()
-        }
     }
 
     Dialog {
@@ -188,13 +198,14 @@ ApplicationWindow {
     Dialog {
         id: mWarnings
 
-        width: parent.width * 0.5
+        property bool isLoading: true
+
+        width: parent.width * 0.65
         anchors.centerIn: parent
 
+        title: "Warning!"
         modal: true
         standardButtons: Dialog.Ok
-
-        bottomPadding: 0
 
         ScrollView {
             anchors.fill: parent
@@ -203,10 +214,12 @@ ApplicationWindow {
             ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
 
             Label {
+                property string loadText: "The file has been opened successfully, but the following"
+                                        + " non-critical issues were noticed in it:\n\n"
+                property string saveText: "The file has been saved successfully, but the following"
+                                        + " non-critical issues were noticed:\n\n"
                 width: mWarnings.width - mWarnings.leftPadding - mWarnings.rightPadding
-                text: "The file has been opened successfully, but the following"
-                    + " non-critical issues were noticed during the loading:\n\n"
-                    + Api.errorLog
+                text: (mWarnings.isLoading ? loadText : saveText) + Api.errorLog
                 wrapMode: Text.Wrap
             }
         }
@@ -218,7 +231,7 @@ ApplicationWindow {
         width: parent.width * 0.45
         anchors.centerIn: parent
 
-        title: "Error"
+        title: "Error!"
         modal: true
         standardButtons: Dialog.Ok
 

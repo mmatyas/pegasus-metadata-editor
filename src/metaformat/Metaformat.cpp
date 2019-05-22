@@ -97,14 +97,21 @@ bool write(const QString& path, const EntryRefs& entries, WriteErrorCB error_cb)
     };
 
 
-    const auto on_error_cb = [](QString){};
+    int counter = 1;
+    const auto entry_error_cb = [&error_cb, &counter](QString msg){
+        error_cb(msg.arg(QString::number(counter)));
+    };
 
 
-    for (const modeldata::Collection* const data : entries.collections)
-        write_entry(render_collection(*data, on_error_cb));
-
-    for (const modeldata::Game* const data : entries.games)
-        write_entry(render_game(*data, on_error_cb));
+    for (const modeldata::Collection* const data : entries.collections) {
+        write_entry(render_collection(*data, entry_error_cb));
+        counter++;
+    }
+    counter = 1;
+    for (const modeldata::Game* const data : entries.games) {
+        write_entry(render_game(*data, entry_error_cb));
+        counter++;
+    }
 
     stream << QChar('\n');
 
