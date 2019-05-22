@@ -16,6 +16,7 @@ Dialog {
             + "<br><br>Copyright \xa9 2019 Mátyás Mustoha"
             + "<br><br><i>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</i>"
         wrapMode: Text.Wrap
+        horizontalAlignment: Text.AlignJustify
         onLinkActivated: Qt.openUrlExternally(link)
     }
 }
