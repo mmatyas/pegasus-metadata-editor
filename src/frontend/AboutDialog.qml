@@ -14,7 +14,7 @@ Dialog {
             + "<br>A graphical editor for the Metadata files of the Pegasus frontend."
             + "<br>Visit us at <a href=\"https://pegasus-frontend.org\">https://pegasus-frontend.org</a>!"
             + "<br><br>Copyright \xa9 2019 Mátyás Mustoha"
-            + "<br><br>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+            + "<br><br><i>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</i>"
         wrapMode: Text.Wrap
         onLinkActivated: Qt.openUrlExternally(link)
     }
