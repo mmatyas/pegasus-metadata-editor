@@ -73,6 +73,10 @@ ApplicationWindow {
             text: "About\u2026"
             onTriggered: mAbout.open()
         }
+        MenuItem {
+            text: "Quit"
+            onTriggered: root.close()
+        }
     }
 
 
