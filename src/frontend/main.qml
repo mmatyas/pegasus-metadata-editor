@@ -143,6 +143,16 @@ ApplicationWindow {
         }
     }
 
+
+    LoadDialog {
+        id: filepicker
+        onPick: Api.openFile(path)
+    }
+    SaveAsDialog {
+        id: mSaveAsDialog
+        onPick: Api.saveAs(path)
+    }
+
     Connections {
         target: Api
         onOpenSuccess: {
@@ -160,25 +170,6 @@ ApplicationWindow {
         onOpenFail: mError.open()
         onSaveFail: mError.open()
     }
-
-    FilePicker {
-        id: filepicker
-        onPick: {
-            collectionSelector.focus = false;
-            collectionEditor.enabled = false;
-            gameSelector.focus = false;
-            gameEditor.enabled = false;
-
-            Api.openFile(path);
-        }
-    }
-
-    SaveAsDialog {
-        id: mSaveAsDialog
-        onPick: Api.saveAs(path)
-    }
-
-    AboutDialog { id: mAbout }
 
 
     Dialog {
@@ -230,4 +221,7 @@ ApplicationWindow {
             wrapMode: Text.Wrap
         }
     }
+
+
+    AboutDialog { id: mAbout }
 }

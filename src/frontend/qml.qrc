@@ -17,9 +17,9 @@
         <file>components/FlatButton.qml</file>
         <file>GameEditor.qml</file>
         <file>components/BigLabel.qml</file>
-        <file>FilePicker.qml</file>
         <file>StringListEditor.qml</file>
         <file>components/FancyToolButton.qml</file>
+        <file>LoadDialog.qml</file>
         <file>SaveAsDialog.qml</file>
         <file>AboutDialog.qml</file>
     </qresource>
