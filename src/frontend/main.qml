@@ -32,6 +32,19 @@ ApplicationWindow {
 
 
     readonly property real leftColumnWidth: width * 0.33
+    property bool canSave: false
+
+    function uiEnable() {
+        mEditor.enabled = true;
+        canSave = true;
+        uiResetOnNew();
+    }
+    function uiResetOnNew() {
+        collectionSelector.focus = false;
+        collectionEditor.enabled = false;
+        gameSelector.focus = false;
+        gameEditor.enabled = false;
+    }
 
 
     header: ToolBar {
@@ -46,7 +59,7 @@ ApplicationWindow {
             FancyToolButton {
                 icon.source: "qrc:///icons/fa/save.svg"
                 onClicked: Api.save()
-                enabled: false
+                enabled: root.canSave
             }
 
             Item { Layout.fillWidth: true }
@@ -63,7 +76,7 @@ ApplicationWindow {
 
         MenuItem {
             text: "Save As\u2026"
-            enabled: false
+            enabled: root.canSave
             onTriggered: mSaveAsDialog.open()
         }
 
@@ -81,8 +94,13 @@ ApplicationWindow {
 
 
     RowLayout {
+        id: mEditor
+
         anchors.fill: parent
         spacing: 0
+
+        enabled: false
+        visible: enabled
 
         FocusScope {
             readonly property int padding: 16
@@ -160,6 +178,7 @@ ApplicationWindow {
                 mWarnings.isLoading = true;
                 mWarnings.open();
             }
+            root.uiEnable();
         }
         onSaveSuccess: {
             if (Api.errorLog) {
