@@ -55,10 +55,18 @@ ApplicationWindow {
             FancyToolButton {
                 icon.source: "qrc:///icons/fa/file.svg"
                 onClicked: Api.createEmpty()
+
+                ToolTip.text: "Create New"
+                ToolTip.visible: hovered
+                ToolTip.delay: 500
             }
             FancyToolButton {
                 icon.source: "qrc:///icons/fa/folder-open.svg"
                 onClicked: mLoadDialog.open()
+
+                ToolTip.text: "Open"
+                ToolTip.visible: hovered
+                ToolTip.delay: 500
             }
             ToolSeparator{}
             FancyToolButton {
@@ -70,6 +78,10 @@ ApplicationWindow {
                         mSaveAsDialog.open();
                 }
                 enabled: root.canSave
+
+                ToolTip.text: "Save"
+                ToolTip.visible: hovered
+                ToolTip.delay: 500
             }
 
             Item { Layout.fillWidth: true }
