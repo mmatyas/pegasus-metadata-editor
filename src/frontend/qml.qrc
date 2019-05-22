@@ -21,5 +21,6 @@
         <file>StringListEditor.qml</file>
         <file>components/FancyToolButton.qml</file>
         <file>SaveAsDialog.qml</file>
+        <file>AboutDialog.qml</file>
     </qresource>
 </RCC>
