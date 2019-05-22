@@ -155,3 +155,8 @@ void FolderListModel::setNameFilters(QStringList nameFilters)
     m_name_filters = std::move(nameFilters);
     cd(QStringLiteral("."));
 }
+
+bool FolderListModel::fileExists(QString path) const
+{
+    return QFileInfo(path).isFile();
+}

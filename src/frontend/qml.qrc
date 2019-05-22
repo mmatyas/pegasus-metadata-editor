@@ -20,5 +20,6 @@
         <file>FilePicker.qml</file>
         <file>StringListEditor.qml</file>
         <file>components/FancyToolButton.qml</file>
+        <file>SaveAsDialog.qml</file>
     </qresource>
 </RCC>

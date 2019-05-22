@@ -55,6 +55,8 @@ public:
     const QStringList& nameFilters() const { return m_name_filters; }
     void setNameFilters(QStringList);
 
+    Q_INVOKABLE bool fileExists(QString path) const;
+
 signals:
     void folderChanged();
 

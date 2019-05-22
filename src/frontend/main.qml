@@ -142,12 +142,18 @@ ApplicationWindow {
         }
     }
 
+    SaveAsDialog {
+        id: mSaveAsDialog
+        onPick: Api.saveAs(path)
+    }
+
     Menu {
         id: mMenuMisc
 
         MenuItem {
             text: "Save As\u2026"
             enabled: false
+            onTriggered: mSaveAsDialog.open()
         }
 
         MenuSeparator {}
