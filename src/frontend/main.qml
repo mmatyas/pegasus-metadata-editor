@@ -54,6 +54,7 @@ ApplicationWindow {
 
             FancyToolButton {
                 icon.source: "qrc:///icons/fa/file.svg"
+                onClicked: Api.createEmpty()
             }
             FancyToolButton {
                 icon.source: "qrc:///icons/fa/folder-open.svg"
@@ -62,7 +63,12 @@ ApplicationWindow {
             ToolSeparator{}
             FancyToolButton {
                 icon.source: "qrc:///icons/fa/save.svg"
-                onClicked: Api.save()
+                onClicked: {
+                    if (Api.filePath)
+                        Api.save();
+                    else
+                        mSaveAsDialog.open();
+                }
                 enabled: root.canSave
             }
 

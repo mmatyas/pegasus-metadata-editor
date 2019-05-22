@@ -34,6 +34,7 @@ class Api: public QObject {
 public:
     explicit Api(QObject* parent = nullptr);
 
+    Q_INVOKABLE void createEmpty();
     Q_INVOKABLE void openFile(QString path);
     Q_INVOKABLE void save();
     Q_INVOKABLE void saveAs(QString path);

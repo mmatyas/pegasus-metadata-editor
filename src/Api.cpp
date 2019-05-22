@@ -48,6 +48,19 @@ Api::Api(QObject* parent)
 {
 }
 
+void Api::createEmpty()
+{
+    m_error_log.clear();
+    emit errorLogChanged();
+
+    m_file_path.clear();
+    emit filePathChanged();
+
+    m_collections.clear();
+    m_games.clear();
+    emit openSuccess();
+}
+
 void Api::openFile(QString path)
 {
     Q_ASSERT(!path.isEmpty());
@@ -101,13 +114,20 @@ void Api::saveAs(QString path)
     for (const model::Game* const game : m_games)
         entryrefs.games.emplace_back(&game->data());
 
-    const bool result = metaformat::write(path, entryrefs, on_error_cb);
+    const bool success = metaformat::write(path, entryrefs, on_error_cb);
 
     m_error_log = errors.join(QChar('\n'));
     emit errorLogChanged();
 
-    if (result)
+    if (success) {
         emit saveSuccess();
-    else
+
+        if (m_file_path.isEmpty()) {
+            m_file_path = path;
+            emit filePathChanged();
+        }
+    }
+    else {
         emit saveFail();
+    }
 }
