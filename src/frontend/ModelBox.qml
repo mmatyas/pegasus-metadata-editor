@@ -108,6 +108,10 @@ Panel {
             delegate: mViewDelegate
 
             ScrollBar.vertical: ScrollBar {}
+
+            add: Transition { NumberAnimation { property: "scale"; from: 0; to: 1; duration: 100 } }
+            remove: Transition { NumberAnimation { property: "opacity"; to: 0; duration: 250 } }
+            displaced: Transition { NumberAnimation { properties: "y"; duration: 250 } }
         }
     }
 
