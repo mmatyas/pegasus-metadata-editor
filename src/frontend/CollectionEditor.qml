@@ -31,11 +31,12 @@ ScrollView {
     }
 
 
-    ColumnLayout {
+    Column {
         anchors.top: parent.top
         anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.rightMargin: 32
         anchors.margins: 16
-        width: parent.width - 3*16
         spacing: 10
 
         InputLine {
@@ -70,12 +71,15 @@ ScrollView {
             text: "The launch command is a single value, but you can break "
                 + "it up to multiple lines for better readability. You can use "
                 + "the following variables in it:"
-            Layout.fillWidth: true
+            anchors.left: parent.left
+            anchors.right: parent.right
         }
         GridLayout {
             columns: 2
             columnSpacing: 32
-            Layout.leftMargin: 16
+            anchors.leftMargin: 16
+            anchors.left: parent.left
+            anchors.right: parent.right
 
             TinyLabel { text: "{file.path}" }
             TinyLabel { text: "Absolute path to the launched file" }
@@ -116,22 +120,25 @@ ScrollView {
             text: "Directories"
         }
         Label {
-            Layout.fillWidth: true
             text: "By default Pegasus will search for games only in the directory (and subdirectories) "
                 + "of the metadata file. You can add additional search directories here."
             wrapMode: Text.Wrap
+            anchors.left: parent.left
+            anchors.right: parent.right
         }
         Label {
-            Layout.fillWidth: true
             text: "Note that the \"include/exclude file\" rules above are still relative to the metadata file!"
             wrapMode: Text.Wrap
+            anchors.left: parent.left
+            anchors.right: parent.right
         }
         StringListEditor {
-            Layout.fillWidth: true
             model: root.cdata ? cdata.directories : 0
+            anchors.left: parent.left
+            anchors.right: parent.right
         }
 
 
-        Item { width: 1; height: 1 }
+        Item { width: 1; height: 64 }
     }
 }

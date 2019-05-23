@@ -11,7 +11,8 @@ ColumnLayout {
     property alias regexText: mRegexDesc.text
     property var cdata
 
-    Layout.fillWidth: true
+    anchors.left: parent.left
+    anchors.right: parent.right
 
     spacing: 10
 

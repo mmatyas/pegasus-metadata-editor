@@ -29,11 +29,12 @@ ScrollView {
     }
 
 
-    ColumnLayout {
+    Column {
         anchors.top: parent.top
         anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.rightMargin: 32
         anchors.margins: 16
-        width: parent.width - 3*16
         spacing: 10
 
         InputLine {
@@ -54,7 +55,8 @@ ScrollView {
         }
 
         RowLayout {
-            Layout.fillWidth: true
+            anchors.left: parent.left
+            anchors.right: parent.right
             Label {
                 text: "Max. players"
                 Layout.fillWidth: true
@@ -76,7 +78,8 @@ ScrollView {
         }
 
         RowLayout {
-            Layout.fillWidth: true
+            anchors.left: parent.left
+            anchors.right: parent.right
             Label {
                 text: "Rating"
                 Layout.fillWidth: true
@@ -102,20 +105,23 @@ ScrollView {
             text: "Files"
         }
         Label {
-            Layout.fillWidth: true
             text: "The following files will belong to this game. There can be more than one (eg. disks, clones). "
                 + "The paths should be relative to the metadata file or absolute."
             wrapMode: Text.Wrap
+            anchors.left: parent.left
+            anchors.right: parent.right
         }
         StringListEditor {
-            Layout.fillWidth: true
             model: cdata ? cdata.files : 0
+            anchors.left: parent.left
+            anchors.right: parent.right
         }
 
         Item { width: 1; height: 32 }
 
         RowLayout {
-            Layout.fillWidth: true
+            anchors.left: parent.left
+            anchors.right: parent.right
 
             Label {
                 Layout.minimumWidth: parent.parent.width * 0.25
@@ -133,7 +139,8 @@ ScrollView {
         Item { width: 1; height: 1 }
 
         RowLayout {
-            Layout.fillWidth: true
+            anchors.left: parent.left
+            anchors.right: parent.right
 
             Label {
                 Layout.minimumWidth: parent.parent.width * 0.25
@@ -151,7 +158,8 @@ ScrollView {
         Item { width: 1; height: 1 }
 
         RowLayout {
-            Layout.fillWidth: true
+            anchors.left: parent.left
+            anchors.right: parent.right
 
             Label {
                 Layout.minimumWidth: parent.parent.width * 0.25
@@ -170,10 +178,11 @@ ScrollView {
             text: "Launching"
         }
         Label {
-            Layout.fillWidth: true
             text: "If this game requires a special launch command or working directory, you can set it here. "
                 + "By default Pegasus will use the values from the collection that contains this game"
             wrapMode: Text.Wrap
+            anchors.left: parent.left
+            anchors.right: parent.right
         }
         InputArea {
             label: "Game-specific launch command"
@@ -185,12 +194,15 @@ ScrollView {
             text: "The launch command is a single value, but you can break "
                 + "it up to multiple lines for better readability. You can use "
                 + "the following variables in it:"
-            Layout.fillWidth: true
+            anchors.left: parent.left
+            anchors.right: parent.right
         }
         GridLayout {
             columns: 2
             columnSpacing: 32
-            Layout.leftMargin: 16
+            anchors.leftMargin: 16
+            anchors.left: parent.left
+            anchors.right: parent.right
 
             TinyLabel { text: "{file.path}" }
             TinyLabel { text: "Absolute path to the launched file" }
@@ -210,6 +222,6 @@ ScrollView {
         }
 
 
-        Item { width: 1; height: 1 }
+        Item { width: 1; height: 64 }
     }
 }

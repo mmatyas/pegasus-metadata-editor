@@ -1,7 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Controls.Material 2.12
-import QtQuick.Layouts 1.12
 
 
 TextArea {
@@ -11,9 +10,10 @@ TextArea {
         ? Material.accentColor
         : (hovered ? Material.primaryTextColor : Material.hintTextColor)
 
+    height: Math.max(font.pixelSize * 5.5, implicitHeight)
 
-    Layout.fillWidth: true
-    Layout.minimumHeight: font.pixelSize * 5
+    anchors.left: parent.left
+    anchors.right: parent.right
 
     leftPadding: mLabel.leftPadding
     rightPadding: leftPadding
