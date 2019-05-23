@@ -220,6 +220,7 @@ ApplicationWindow {
                 mWarnings.isLoading = false;
                 mWarnings.open();
             }
+            mToast.show("File saved", 2000);
         }
         onOpenFail: mError.open()
         onSaveFail: mError.open()
@@ -282,6 +283,15 @@ ApplicationWindow {
 
         onRejected: close()
         onAccepted: mLoadDialog.open()
+    }
+
+
+    Item {
+        // toast position
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        ToolTip { id: mToast }
     }
 
 
