@@ -28,23 +28,26 @@ class Api: public QObject {
 
     Q_PROPERTY(QString errorLog READ errorLog NOTIFY errorLogChanged)
     Q_PROPERTY(QString filePath READ filePath NOTIFY filePathChanged)
+    Q_PROPERTY(bool hasDocument READ hasDocument NOTIFY hasDocumentChanged)
     QML_OBJMODEL_PROPERTY(model::Collection, collections)
     QML_OBJMODEL_PROPERTY(model::Game, games)
 
 public:
     explicit Api(QObject* parent = nullptr);
 
-    Q_INVOKABLE void createEmpty();
+    Q_INVOKABLE void newDocument();
     Q_INVOKABLE void openFile(QString path);
     Q_INVOKABLE void save();
     Q_INVOKABLE void saveAs(QString path);
 
     const QString& errorLog() const { return m_error_log; }
     const QString& filePath() const { return m_file_path; }
+    bool hasDocument() const { return m_has_document; }
 
 signals:
     void errorLogChanged();
     void filePathChanged();
+    void hasDocumentChanged();
 
     void openSuccess();
     void openFail();
@@ -54,4 +57,5 @@ signals:
 private:
     QString m_error_log;
     QString m_file_path;
+    bool m_has_document;
 };

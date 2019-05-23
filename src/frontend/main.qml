@@ -46,6 +46,13 @@ ApplicationWindow {
         gameEditor.enabled = false;
     }
 
+    function documentSave() {
+        if (Api.filePath)
+            Api.save();
+        else
+            mSaveAsDialog.open();
+    }
+
 
     header: ToolBar {
         RowLayout {
@@ -54,16 +61,24 @@ ApplicationWindow {
 
             FancyToolButton {
                 icon.source: "qrc:///icons/fa/file.svg"
-                onClicked: Api.createEmpty()
-
+                onClicked: {
+                    if (Api.hasDocument)
+                        mOnCreateSaveWarning.open();
+                    else
+                        Api.newDocument();
+                }
                 ToolTip.text: "Create New"
                 ToolTip.visible: hovered
                 ToolTip.delay: 500
             }
             FancyToolButton {
                 icon.source: "qrc:///icons/fa/folder-open.svg"
-                onClicked: mLoadDialog.open()
-
+                onClicked: {
+                    if (Api.hasDocument)
+                        mOnOpenSaveWarning.open();
+                    else
+                        mLoadDialog.open()
+                }
                 ToolTip.text: "Open"
                 ToolTip.visible: hovered
                 ToolTip.delay: 500
@@ -71,12 +86,7 @@ ApplicationWindow {
             ToolSeparator{}
             FancyToolButton {
                 icon.source: "qrc:///icons/fa/save.svg"
-                onClicked: {
-                    if (Api.filePath)
-                        Api.save();
-                    else
-                        mSaveAsDialog.open();
-                }
+                onClicked: root.documentSave()
                 enabled: root.canSave
 
                 ToolTip.text: "Save"
@@ -245,25 +255,33 @@ ApplicationWindow {
             }
         }
     }
-
-    Dialog {
+    MessageDialog {
         id: mError
-
-        width: parent.width * 0.45
-        anchors.centerIn: parent
-
         title: "Error!"
-        modal: true
         standardButtons: Dialog.Ok
+        text: Api.errorLog ? Api.errorLog
+            : "The save/load operation failed for an unknown reason."
+            + " If this problem keeps appearing, please report it to the developers."
+    }
+    MessageDialog {
+        id: mOnCreateSaveWarning
+        standardButtons: Dialog.Yes | Dialog.Cancel
+        text: "You are about to create a new metadata file. There is already one open, "
+            + " so in case you forgot to save it, you can still go back now."
+            + "\n\nCan I close the currently open file?"
 
-        Label {
-            id: mErrorText
-            text: Api.errorLog ? Api.errorLog
-                : "The save/load operation failed for an unknown reason."
-                + " If this problem keeps appearing, please report it to the developers."
-            width: mError.width - mError.leftPadding - mError.rightPadding
-            wrapMode: Text.Wrap
-        }
+        onRejected: close()
+        onAccepted: Api.newDocument()
+    }
+    MessageDialog {
+        id: mOnOpenSaveWarning
+        standardButtons: Dialog.Yes | Dialog.Cancel
+        text: "You are about to load a metadata file. There is already one open, "
+            + " so in case you forgot to save it, you can still go back now."
+            + "\n\nCan I close the currently open file?"
+
+        onRejected: close()
+        onAccepted: mLoadDialog.open()
     }
 
 

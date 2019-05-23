@@ -45,10 +45,10 @@ void build_qml_layer(metaformat::Entries& data, Api& api)
 
 Api::Api(QObject* parent)
     : QObject(parent)
-{
-}
+    , m_has_document(false)
+{}
 
-void Api::createEmpty()
+void Api::newDocument()
 {
     m_error_log.clear();
     emit errorLogChanged();
@@ -59,6 +59,9 @@ void Api::createEmpty()
     m_collections.clear();
     m_games.clear();
     emit openSuccess();
+
+    m_has_document = true;
+    emit hasDocumentChanged();
 }
 
 void Api::openFile(QString path)
@@ -86,6 +89,9 @@ void Api::openFile(QString path)
 
         build_qml_layer(parsed, *this);
         emit openSuccess();
+
+        m_has_document = true;
+        emit hasDocumentChanged();
     }
     else {
         emit openFail();
