@@ -25,5 +25,6 @@
         <file>AboutDialog.qml</file>
         <file>WelcomeText.qml</file>
         <file>components/MessageDialog.qml</file>
+        <file>EntryEditHelpText.qml</file>
     </qresource>
 </RCC>

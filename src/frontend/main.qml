@@ -196,6 +196,9 @@ ApplicationWindow {
             visible: enabled && cdata
             cdata: Api.games.get(gameSelector.currentIndex)
         }
+        EntryEditHelpText {
+            visible: !collectionEditor.visible && !gameEditor.visible
+        }
     }
 
 
