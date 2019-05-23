@@ -44,6 +44,16 @@ Panel {
                 font.pointSize: 14
                 horizontalAlignment: Text.AlignHCenter
 
+                Rectangle {
+                    anchors.fill: parent
+                    radius: width * 0.5
+                    color: "transparent"
+                    border.width: 1
+                    border.color: "#000"
+                    opacity: 0.4
+                    visible: addBtnMouse.containsMouse
+                }
+
                 MouseArea {
                     id: addBtnMouse
                     anchors.fill: parent
