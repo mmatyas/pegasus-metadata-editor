@@ -1,5 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import QtQuick.Controls.Material 2.12
 import QtQuick.Layouts 1.12
 import SortFilterProxyModel 0.2
 import "components"
@@ -82,7 +83,11 @@ Panel {
         id: mViewDelegate
 
         Text {
-            text: modelData[modelNameKey]
+            readonly property string name: modelData[modelNameKey]
+
+            text: name ? name : "(unnamed)"
+            color: name ? Material.foreground : Material.color(Material.Red)
+            font.italic: !name
 
             width: ListView.view.width
             padding: font.pixelSize * 0.3
