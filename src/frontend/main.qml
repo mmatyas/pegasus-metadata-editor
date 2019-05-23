@@ -163,6 +163,7 @@ ApplicationWindow {
                         collectionEditor.enabled = true;
                         collectionEditor.focus = true;
                     }
+                    onCreateNew: Api.newCollection()
                     Layout.preferredHeight: root.height * 0.25
                 }
 
@@ -177,6 +178,7 @@ ApplicationWindow {
                         gameEditor.enabled = true;
                         gameEditor.focus = true;
                     }
+                    onCreateNew: Api.newGame()
                     Layout.fillHeight: true
                 }
             }

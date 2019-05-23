@@ -15,6 +15,7 @@ Panel {
     readonly property int currentIndex: mModelFilter.mapToSource(mView.currentIndex)
 
     signal picked
+    signal createNew
 
 
     ColumnLayout {
@@ -29,6 +30,27 @@ Panel {
             padding: 8
 
             Layout.fillWidth: true
+
+            Label {
+                id: addBtn
+
+                width: height
+                anchors.right: parent.right
+                anchors.rightMargin: 5
+                anchors.verticalCenter: parent.verticalCenter
+
+                text: "+"
+                font.bold: addBtnMouse.containsMouse
+                font.pointSize: 14
+                horizontalAlignment: Text.AlignHCenter
+
+                MouseArea {
+                    id: addBtnMouse
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    onClicked: root.createNew()
+                }
+            }
         }
 
         InputLineNarrow {
@@ -113,6 +135,26 @@ Panel {
                 anchors.fill: parent
                 hoverEnabled: true
                 onClicked: parent.pick()
+            }
+
+
+            Label {
+                id: delBtn
+
+                width: height * 1.25
+                anchors.right: parent.right
+                anchors.rightMargin: 10
+                anchors.verticalCenter: parent.verticalCenter
+
+                text: "\xd7"
+                font.pointSize: 14
+                visible: mouse.containsMouse
+                horizontalAlignment: Text.AlignHCenter
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: root.model.remove(index)
+                }
             }
         }
     }

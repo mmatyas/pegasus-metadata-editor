@@ -137,3 +137,13 @@ void Api::saveAs(QString path)
         emit saveFail();
     }
 }
+
+void Api::newCollection()
+{
+    m_collections.append(new model::Collection({}));
+}
+
+void Api::newGame()
+{
+    m_games.append(new model::Game({}));
+}

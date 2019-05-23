@@ -40,6 +40,9 @@ public:
     Q_INVOKABLE void save();
     Q_INVOKABLE void saveAs(QString path);
 
+    Q_INVOKABLE void newCollection();
+    Q_INVOKABLE void newGame();
+
     const QString& errorLog() const { return m_error_log; }
     const QString& filePath() const { return m_file_path; }
     bool hasDocument() const { return m_has_document; }
