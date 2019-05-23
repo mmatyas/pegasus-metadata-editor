@@ -136,8 +136,10 @@ class Game: public QObject {
     FIELD_PROP(QString, launch_workdir)
 
     FIELD_PROP(int, max_players)
+    FIELD_PROP(int, release_year)
+    FIELD_PROP(int, release_month)
+    FIELD_PROP(int, release_day)
     FIELD_PROP_FLOAT(float, rating)
-    FIELD_PROP(QDate, release_date)
 
     FIELD_PROP(QVariantMap, assets)
     FIELD_PROP(QVariantMap, extra)
@@ -152,7 +154,9 @@ signals:
 
     FIELD_SIGNAL(max_players)
     FIELD_SIGNAL(rating)
-    FIELD_SIGNAL(release_date)
+    FIELD_SIGNAL(release_year)
+    FIELD_SIGNAL(release_month)
+    FIELD_SIGNAL(release_day)
 
     FIELD_SIGNAL(assets)
     FIELD_SIGNAL(extra)

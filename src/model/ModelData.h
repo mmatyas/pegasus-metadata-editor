@@ -64,9 +64,11 @@ struct Game {
     QString launch_cmd;
     QString launch_workdir;
 
-    int max_players;
     float rating;
-    QDate release_date;
+    int max_players;
+    int release_year;
+    int release_month;
+    int release_day;
 
     QStringList developers;
     QStringList publishers;

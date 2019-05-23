@@ -53,7 +53,6 @@ ScrollView {
             text: get_str("description")
             onTextChanged: set_val("description", text)
         }
-
         RowLayout {
             anchors.left: parent.left
             anchors.right: parent.right
@@ -76,7 +75,6 @@ ScrollView {
                 Layout.preferredWidth: font.pixelSize * 2
             }
         }
-
         RowLayout {
             anchors.left: parent.left
             anchors.right: parent.right
@@ -97,6 +95,72 @@ ScrollView {
                 text: (mRating.value > 0.5) ? (mRating.value.toFixed(0) + "%") : "--"
                 horizontalAlignment: Text.AlignRight
                 Layout.preferredWidth: font.pixelSize * 2
+            }
+        }
+        RowLayout {
+            anchors.left: parent.left
+            anchors.right: parent.right
+            InputLine {
+                id: mRelYear
+
+                readonly property int cdataNum: cdata ? cdata.release_year : 0
+
+                label: "Release year"
+                text: cdataNum ? cdataNum : ""
+                placeholderText: "YYYY"
+                onTextChanged: {
+                    if (acceptableInput)
+                        set_val("release_year", text);
+                    else if (!text)
+                        set_val("release_year", 0);
+                }
+                validator: IntValidator { bottom: 1900; top: 2100 }
+
+                anchors.left: undefined
+                anchors.right: undefined
+                Layout.fillWidth: true
+            }
+            InputLine {
+                id: mRelMonth
+
+                readonly property int cdataNum: cdata ? cdata.release_month : 0
+
+                label: "Release month"
+                text: cdataNum ? cdataNum : ""
+                placeholderText: "1-12"
+                onTextChanged: {
+                    if (acceptableInput)
+                        set_val("release_month", text);
+                    else if (!text)
+                        set_val("release_month", 0);
+                }
+                validator: IntValidator { bottom: 1; top: 12 }
+
+                anchors.left: undefined
+                anchors.right: undefined
+                Layout.minimumWidth: parent.width * 0.33
+
+                enabled: mRelYear.acceptableInput
+            }
+            InputLine {
+                readonly property int cdataNum: cdata ? cdata.release_day : 0
+
+                label: "Release day"
+                text: cdataNum ? cdataNum : ""
+                placeholderText: "1-31"
+                onTextChanged: {
+                    if (acceptableInput)
+                        set_val("release_day", text);
+                    else if (!text)
+                        set_val("release_day", 0);
+                }
+                validator: IntValidator { bottom: 1; top: 31 }
+
+                anchors.left: undefined
+                anchors.right: undefined
+                Layout.minimumWidth: parent.width * 0.33
+
+                enabled: mRelMonth.enabled && mRelMonth.acceptableInput
             }
         }
 

@@ -44,24 +44,21 @@ void try_parse_players(const metafile::Entry& entry, int& target, metaformat::Pa
         QStringLiteral("incorrect player count, should be a single number or a number range."));
 }
 
-void try_parse_date(const metafile::Entry& entry, QDate& target, metaformat::ParseErrorCB error_cb)
+void try_parse_date(const metafile::Entry& entry, int& year, int& month, int& day, metaformat::ParseErrorCB error_cb)
 {
     static const QRegularExpression rx(QStringLiteral("^(\\d{4})(-(\\d{1,2}))?(-(\\d{1,2}))?$"));
     Q_ASSERT(rx.isValid());
 
     const QRegularExpressionMatch rx_match = rx.match(metaformat::first_line_of(entry, error_cb));
     if (rx_match.hasMatch()) {
-        const int y = rx_match.captured(1).toInt();
+        year = rx_match.captured(1).toInt();
 
-        int m = 1;
         if (!rx_match.captured(3).isEmpty())
-            m = qBound(1, rx_match.captured(3).toInt(), 12);
+            month = qBound(1, rx_match.captured(3).toInt(), 12);
 
-        int d = 1;
         if (!rx_match.captured(5).isEmpty())
-            m = qBound(1, rx_match.captured(5).toInt(), 12);
+            day = qBound(1, rx_match.captured(5).toInt(), 12);
 
-        target.setDate(y, m, d);
         return;
     }
 
@@ -140,7 +137,7 @@ void parse_game_entry(const metafile::Entry& entry, modeldata::Game& game, Parse
         return;
     }
     if (entry.key == QLatin1String("release")) {
-        try_parse_date(entry, game.release_date, error_cb);
+        try_parse_date(entry, game.release_year, game.release_month, game.release_day, error_cb);
         return;
     }
     if (entry.key == QLatin1String("rating")) {
@@ -170,8 +167,26 @@ QString render_game(const modeldata::Game& data, WriteErrorCB error_cb)
     RENDER_LIST(publisher, publishers, developers)
     RENDER_LIST(genre, genres, genres)
 
-    if (data.release_date.isValid())
-        lines.append(QStringLiteral("release: ") + data.release_date.toString(QStringLiteral("yyyy-MM-dd")));
+    if (data.release_year) {
+        QString date_str = QString::number(data.release_year);
+
+        if (data.release_month) {
+            date_str += QChar('-');
+            if (data.release_month < 10)
+                date_str += QChar('0');
+
+            date_str += QString::number(data.release_month);
+
+            if (data.release_day) {
+                date_str += QChar('-');
+                if (data.release_day < 10)
+                    date_str += QChar('0');
+
+                date_str += QString::number(data.release_day);
+            }
+        }
+        lines.append(QStringLiteral("release: ") + date_str);
+    }
 
     if (data.max_players)
         lines.append(QStringLiteral("players: ") + QString::number(data.max_players));

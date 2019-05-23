@@ -23,8 +23,11 @@ CollectionFilter::CollectionFilter() = default;
 Collection::Collection() = default;
 
 Game::Game()
-    : max_players(1)
-    , rating(0.0)
+    : rating(0.0)
+    , max_players(1)
+    , release_year(0)
+    , release_month(0)
+    , release_day(0)
 {}
 
 } // namespace modeldata
