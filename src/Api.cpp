@@ -128,7 +128,7 @@ void Api::saveAs(QString path)
     if (success) {
         emit saveSuccess();
 
-        if (m_file_path.isEmpty()) {
+        if (m_file_path != path) {
             m_file_path = path;
             emit filePathChanged();
         }
