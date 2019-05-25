@@ -8,6 +8,8 @@ DEFINES += \
     QT_DEPRECATED_WARNINGS \
     QT_DISABLE_DEPRECATED_BEFORE=0x060000 \
     QT_NO_CAST_TO_ASCII \
+    GIT_REVISION=\\\"$${GIT_REVISION}\\\" \
+    GIT_DATE=\\\"$${GIT_DATE}\\\"
 
 HEADERS += \
     Api.h \
@@ -19,6 +21,7 @@ SOURCES += \
     FolderListModel.cpp \
 
 RESOURCES += frontend/qml.qrc
+OTHER_FILES += ../.qmake.conf
 
 
 include(utils/utils.pri)
