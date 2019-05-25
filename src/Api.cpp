@@ -43,6 +43,10 @@ void build_qml_layer(metaformat::Entries& data, Api& api)
 } // namespace
 
 
+const QString Api::m_git_revision(QLatin1String(GIT_REVISION));
+const QString Api::m_git_date(QLatin1String(GIT_DATE));
+
+
 Api::Api(QObject* parent)
     : QObject(parent)
     , m_has_document(false)

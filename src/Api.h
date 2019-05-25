@@ -32,6 +32,9 @@ class Api: public QObject {
     QML_OBJMODEL_PROPERTY(model::Collection, collections)
     QML_OBJMODEL_PROPERTY(model::Game, games)
 
+    Q_PROPERTY(QString gitRevision MEMBER m_git_revision CONSTANT)
+    Q_PROPERTY(QString gitDate MEMBER m_git_date CONSTANT)
+
 public:
     explicit Api(QObject* parent = nullptr);
 
@@ -58,6 +61,9 @@ signals:
     void saveFail();
 
 private:
+    static const QString m_git_revision;
+    static const QString m_git_date;
+
     QString m_error_log;
     QString m_file_path;
     bool m_has_document;
