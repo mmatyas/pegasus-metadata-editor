@@ -1,3 +1,6 @@
+TEMPLATE = app
+TARGET = pegasus-metaed
+
 QT += quick quickcontrols2 svg
 CONFIG += c++11 qtquickcompiler warn_on
 
