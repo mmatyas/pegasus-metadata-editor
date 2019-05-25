@@ -30,6 +30,9 @@ include(metaformat/metaformat.pri)
 include(../thirdparty/thirdparty.pri)
 
 
+unix:!android:!macx {
+    target.path = /opt/$${TARGET}/
+}
 android {
     QT += androidextras
 
@@ -49,7 +52,16 @@ android {
 
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/platform/android
 }
+win32 {
+    QMAKE_TARGET_PRODUCT = "pegasus-metadata-editor"
+    QMAKE_TARGET_COMPANY = "pegasus-frontend.org"
+    QMAKE_TARGET_DESCRIPTION = "Metadata Editor for the Pegasus frontend"
+    QMAKE_TARGET_COPYRIGHT = "Copyright (c) 2017-2019 Matyas Mustoha"
+    RC_ICONS = platform/windows/app_icon.ico
+    OTHER_FILES += $${RC_ICONS}
+
+    target.path = C:/$${TARGET}/
+}
 
 
-unix:!android: target.path = /opt/$${TARGET}/
 !isEmpty(target.path): INSTALLS += target
