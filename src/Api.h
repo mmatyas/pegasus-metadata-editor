@@ -1,4 +1,4 @@
-// Pegasus Frontend
+// Pegasus Metadata Editor
 // Copyright (C) 2017-2019  Mátyás Mustoha
 //
 // This program is free software: you can redistribute it and/or modify
