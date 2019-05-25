@@ -2,7 +2,7 @@
 <manifest
     package="org.pegasus_frontend.metaed"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:versionName="1.0"
+    android:versionName="devel"
     android:versionCode="1"
     android:installLocation="auto">
     <application
