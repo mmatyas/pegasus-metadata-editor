@@ -30,8 +30,10 @@ include(metaformat/metaformat.pri)
 include(../thirdparty/thirdparty.pri)
 
 
+LONGNAME=pegasus-metadata-editor
+
 unix:!android:!macx {
-    target.path = /opt/$${TARGET}/
+    target.path = /opt/$${LONGNAME}/
 }
 android {
     QT += androidextras
@@ -60,7 +62,7 @@ win32 {
     RC_ICONS = platform/windows/app_icon.ico
     OTHER_FILES += $${RC_ICONS}
 
-    target.path = C:/$${TARGET}/
+    target.path = C:/$${LONGNAME}/
 }
 macx {
     ICON = platform/macos/pegasus-metadata-editor.icns
@@ -68,7 +70,7 @@ macx {
     QMAKE_TARGET_BUNDLE_PREFIX = org.pegasus-frontend
     QMAKE_INFO_PLIST = platform/macos/Info.plist.in
 
-    target.path = /usr/local/$${TARGET}/
+    target.path = /usr/local/$${LONGNAME}/
 }
 
 !isEmpty(target.path): INSTALLS += target
