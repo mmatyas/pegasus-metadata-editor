@@ -41,8 +41,10 @@ ApplicationWindow {
     }
     function uiResetOnNew() {
         collectionSelector.focus = false;
+        collectionSelector.resetIndex();
         collectionEditor.enabled = false;
         gameSelector.focus = false;
+        gameSelector.resetIndex();
         gameEditor.enabled = false;
     }
 

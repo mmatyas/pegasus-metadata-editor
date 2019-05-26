@@ -17,6 +17,10 @@ Panel {
     signal picked
     signal createNew
 
+    function resetIndex() {
+        mView.currentIndex = -1;
+    }
+
 
     ColumnLayout {
         anchors.fill: parent
