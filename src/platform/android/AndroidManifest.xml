@@ -14,7 +14,7 @@
         <activity
             android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|layoutDirection|locale|fontScale|keyboard|keyboardHidden|navigation"
             android:name=".MainActivity"
-            android:label="PegasusMetaEd"
+            android:label="Pegasus Metadata Editor"
             android:screenOrientation="userLandscape"
             android:launchMode="singleTop">
             <intent-filter>
