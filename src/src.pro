@@ -65,7 +65,7 @@ win32 {
     target.path = C:/$${LONGNAME}/
 }
 macx {
-    ICON = platform/macos/pegasus-metadata-editor.icns
+    ICON = platform/macos/appicons.icns
     QMAKE_APPLICATION_BUNDLE_NAME = "Pegasus Metadata Editor"
     QMAKE_TARGET_BUNDLE_PREFIX = org.pegasus-frontend
     QMAKE_INFO_PLIST = platform/macos/Info.plist.in
