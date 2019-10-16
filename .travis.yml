@@ -9,7 +9,7 @@ branches:
 
 env:
   global:
-    - QT_VER=5.12.3
+    - QT_VER=5.12.5
 
 
 install: ./.travis/install.sh
@@ -30,7 +30,7 @@ jobs:
   - env: TARGET=rpi2-static
   - env: TARGET=rpi3-static
 
-  - env: TARGET=macos-static
+  - env: TARGET=macos-static QT_VER=5.12.3
     os: osx
     osx_image: xcode9.2
 
