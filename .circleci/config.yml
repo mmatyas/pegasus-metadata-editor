@@ -14,6 +14,7 @@ jobs:
       - run: sed -i "s/android:versionName=\"devel\"/android:versionName=\"$(git describe --always)\"/" src/platform/android/AndroidManifest.xml
       - run: sed -i "s/android:versionCode=\"1\"/android:versionCode=\"$(git rev-list --count HEAD)\"/" src/platform/android/AndroidManifest.xml
       - run: curl -L ${TOOLS_URL}/${QT_TARGET}.txz | tar xJf - -C /opt/
+      - run: curl -L ${TOOLS_URL}/openssl-111a_android.txz | tar xJf - -C /opt/
       - run: /opt/${QT_TARGET}/bin/qmake .
       - run: make
       - run: make install INSTALL_ROOT=${PWD}/installdir
@@ -40,6 +41,7 @@ jobs:
       - run: git checkout -qf ${CIRCLE_SHA1}
       - run: git submodule update --init --recursive
       - run: curl -L ${TOOLS_URL}/${QT_TARGET}.txz | tar xJf - -C /opt/
+      - run: curl -L ${TOOLS_URL}/openssl-111a_mingw.txz | tar xJf - -C /opt/
       - run: /opt/${QT_TARGET}_hosttools/bin/qmake .
       - run: make
       - run: make install INSTALL_ROOT=${PWD}/installdir
