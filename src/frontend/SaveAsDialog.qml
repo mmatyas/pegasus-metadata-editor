@@ -143,7 +143,7 @@ Popup {
             readonly property bool highlighted: ListView.isCurrentItem || mouseArea.containsMouse
 
             color: highlighted ? "#d1d2d3" : "transparent"
-            width: parent.width
+            width: ListView.view.width
             height: label.height
 
             function pickItem() {
