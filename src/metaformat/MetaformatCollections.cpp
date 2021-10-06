@@ -43,6 +43,7 @@ void parse_collection_entry(const metafile::Entry& entry, modeldata::Collection&
     }
 
     SINGLE_VALUE(shortname, collection.shortname)
+    SINGLE_VALUE(sortby, collection.sortby)
     TEXT_LINES(summary, collection.summary)
     TEXT_LINES(description, collection.description)
 
@@ -81,6 +82,7 @@ QString render_collection(const modeldata::Collection& data, WriteErrorCB error_
     lines.append(QStringLiteral("collection: ") + data.name);
 
     RENDER_SINGLE(shortname, shortname)
+    RENDER_SINGLE(sortBy, sortby)
     RENDER_TEXT(summary, summary)
     RENDER_TEXT(description, description)
 

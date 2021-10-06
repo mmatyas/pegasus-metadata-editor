@@ -50,6 +50,12 @@ ScrollView {
             text: get_str("shortname")
             onTextEdited: set_val("shortname", text)
         }
+        InputLine {
+            label: "Sort by"
+            text: get_str("sortby")
+            onTextChanged: set_val("sortby", text)
+            placeholderText: "Same as collection name"
+        }
 
         InputArea {
             label: "Summary (short description)"

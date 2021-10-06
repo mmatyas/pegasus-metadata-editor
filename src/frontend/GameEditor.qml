@@ -43,6 +43,12 @@ ScrollView {
             font.pointSize: 20
             onTextEdited: set_val("title", text)
         }
+        InputLine {
+            label: "Sort by"
+            text: get_str("sortby")
+            onTextChanged: set_val("sortby", text)
+            placeholderText: "Same as game title"
+        }
         InputArea {
             label: "Summary (short description)"
             text: get_str("summary")

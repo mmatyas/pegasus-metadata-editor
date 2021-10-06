@@ -124,6 +124,7 @@ void parse_game_entry(const metafile::Entry& entry, modeldata::Game& game, Parse
     MULTI_VALUE(genre, game.genres)
     MULTI_VALUE(genres, game.genres)
 
+    SINGLE_VALUE(sortby, game.sortby)
     TEXT_LINES(summary, game.summary)
     TEXT_LINES(description, game.description)
 
@@ -160,6 +161,7 @@ QString render_game(const modeldata::Game& data, WriteErrorCB error_cb)
 
     RENDER_LIST(file, files, files)
 
+    RENDER_SINGLE(sortBy, sortby)
     RENDER_TEXT(summary, summary)
     RENDER_TEXT(description, description)
 

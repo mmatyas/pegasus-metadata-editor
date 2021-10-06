@@ -89,6 +89,7 @@ class Collection: public QObject {
     Q_OBJECT
 
     FIELD_PROP(QString, name)
+    FIELD_PROP(QString, sortby)
     FIELD_PROP(QString, shortname)
     FIELD_PROP(QString, summary)
     FIELD_PROP(QString, description)
@@ -101,6 +102,7 @@ class Collection: public QObject {
 
 signals:
     FIELD_SIGNAL(name)
+    FIELD_SIGNAL(sortby)
     FIELD_SIGNAL(shortname)
     FIELD_SIGNAL(summary)
     FIELD_SIGNAL(description)
@@ -129,6 +131,7 @@ class Game: public QObject {
     Q_OBJECT
 
     FIELD_PROP(QString, title)
+    FIELD_PROP(QString, sortby)
     FIELD_PROP(QString, summary)
     FIELD_PROP(QString, description)
 
@@ -146,6 +149,7 @@ class Game: public QObject {
 
 signals:
     FIELD_SIGNAL(title)
+    FIELD_SIGNAL(sortby)
     FIELD_SIGNAL(summary)
     FIELD_SIGNAL(description)
 

@@ -41,6 +41,7 @@ struct Collection {
     QString shortname;
     QString summary;
     QString description;
+    QString sortby;
 
     QStringList directories;
     CollectionFilter include;
@@ -60,6 +61,7 @@ struct Game {
     QString title;
     QString summary;
     QString description;
+    QString sortby;
 
     QString launch_cmd;
     QString launch_workdir;
