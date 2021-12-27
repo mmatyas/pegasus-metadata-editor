@@ -19,7 +19,7 @@ jobs:
       - run: make
       - run: make install INSTALL_ROOT=${PWD}/installdir
       - run: /opt/${QT_TARGET}/bin/androiddeployqt
-          --input src/android-libpegasus-metaed.so-deployment-settings.json
+          --input src/android-pegasus-metaed-deployment-settings.json
           --output ${PWD}/installdir
           --android-platform android-22
           --gradle

@@ -1,0 +1,34 @@
+name: Build
+
+on: [push, workflow_dispatch]
+
+env:
+  QT_VER: "5.15.2"
+
+
+jobs:
+  x11-static:
+    runs-on: ubuntu-18.04
+    env:
+      TARGET: x11-static
+    steps:
+      - uses: actions/checkout@v2
+      - run: .travis/install.sh
+      - run: .travis/script.sh
+      - uses: actions/upload-artifact@v2
+        with:
+          name: pme-x11-static
+          path: dist
+
+  macos-static:
+    runs-on: macos-10.15
+    env:
+      TARGET: macos-static
+    steps:
+      - uses: actions/checkout@v2
+      - run: .travis/install.sh
+      - run: .travis/script.sh
+      - uses: actions/upload-artifact@v2
+        with:
+          name: pme-macos-static
+          path: dist
