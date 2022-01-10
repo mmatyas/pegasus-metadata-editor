@@ -42,12 +42,15 @@ ScrollView {
             text: get_str("title")
             font.pointSize: 20
             onTextEdited: set_val("title", text)
+            tooltipText: "A pretty name for your game"
         }
         InputLine {
             label: "Sort by"
             text: get_str("sortby")
             onTextChanged: set_val("sortby", text)
             placeholderText: "Same as game title"
+            tooltipText: "The games will be sorted by this field; "
+                + "useful if the name starts with eg. roman numerals or an article"
         }
         InputArea {
             label: "Summary (short description)"
@@ -176,7 +179,8 @@ ScrollView {
         }
         Label {
             text: "The following files will belong to this game. There can be more than one (eg. disks, clones). "
-                + "The paths should be relative to the metadata file or absolute."
+                + "The paths should be relative to the metadata file or absolute. "
+                + "You can also use URIs like 'steam://12345'."
             wrapMode: Text.Wrap
             anchors.left: parent.left
             anchors.right: parent.right
@@ -259,32 +263,10 @@ ScrollView {
             font.family: "Monospace"
             text: get_str("launch_cmd")
             onTextChanged: set_val("launch_cmd", text)
+            tooltipText: "This is the command Pegasus will run when you launch a game"
         }
-        TinyLabel {
-            text: "The launch command is a single value, but you can break "
-                + "it up to multiple lines for better readability. You can use "
-                + "the following variables in it:"
-            anchors.left: parent.left
-            anchors.right: parent.right
-        }
-        GridLayout {
-            columns: 2
-            columnSpacing: 32
-            anchors.leftMargin: 16
-            anchors.left: parent.left
-            anchors.right: parent.right
-
-            TinyLabel { text: "{file.path}" }
-            TinyLabel { text: "Absolute path to the launched file" }
-            TinyLabel { text: "{file.name}" }
-            TinyLabel { text: "The file name part of the path" }
-            TinyLabel { text: "{file.basename}" }
-            TinyLabel { text: "The file name without extension" }
-            TinyLabel { text: "{file.dir}" }
-            TinyLabel { text: "The directory where the file is located" }
-            TinyLabel { text: "{env.MYVAR}" }
-            TinyLabel { text: "The value of the environment variable MYVAR, if defined" }
-        }
+        CommandVarsLabel {}
+        CommandVarsHelp {}
         InputLine {
             label: "Game-specific working directory"
             text: get_str("launch_workdir")

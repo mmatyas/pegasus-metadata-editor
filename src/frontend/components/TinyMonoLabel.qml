@@ -1,0 +1,3 @@
+TinyLabel {
+    font.family: "Monospace"
+}

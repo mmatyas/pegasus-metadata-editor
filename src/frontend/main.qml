@@ -142,12 +142,12 @@ ApplicationWindow {
 
         FocusScope {
             readonly property int padding: 16
-            readonly property int mWidth: leftColumnWidth - 2 * padding
+            readonly property int fixedWidth: leftColumnWidth - 2 * padding
 
             Layout.fillHeight: true
-            Layout.minimumWidth: mWidth
-            Layout.maximumWidth: mWidth
-            Layout.preferredWidth: mWidth
+            Layout.minimumWidth: fixedWidth
+            Layout.maximumWidth: fixedWidth
+            Layout.preferredWidth: fixedWidth
             Layout.margins: padding
 
             ColumnLayout {

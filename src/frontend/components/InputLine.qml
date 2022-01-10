@@ -5,6 +5,7 @@ import QtQuick.Controls.Material 2.12
 
 TextField {
     property alias label: mLabel.text
+    property string tooltipText: ""
 
     readonly property color mAccentColor: activeFocus
         ? Material.accentColor
@@ -22,6 +23,10 @@ TextField {
     background: Rectangle {
         color: "#10000000"
     }
+
+    ToolTip.text: tooltipText
+    ToolTip.visible: tooltipText ? hovered : false
+    ToolTip.delay: 500
 
     Label {
         id: mLabel

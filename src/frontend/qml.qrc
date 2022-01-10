@@ -26,5 +26,8 @@
         <file>WelcomeText.qml</file>
         <file>components/MessageDialog.qml</file>
         <file>EntryEditHelpText.qml</file>
+        <file>components/TinyMonoLabel.qml</file>
+        <file>components/CommandVarsHelp.qml</file>
+        <file>components/CommandVarsLabel.qml</file>
     </qresource>
 </RCC>
