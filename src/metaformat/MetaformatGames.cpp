@@ -57,7 +57,7 @@ void try_parse_date(const metafile::Entry& entry, int& year, int& month, int& da
             month = qBound(1, rx_match.captured(3).toInt(), 12);
 
         if (!rx_match.captured(5).isEmpty())
-            day = qBound(1, rx_match.captured(5).toInt(), 12);
+            day = qBound(1, rx_match.captured(5).toInt(), 31);
 
         return;
     }
