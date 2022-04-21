@@ -166,7 +166,7 @@ QString render_game(const modeldata::Game& data, WriteErrorCB error_cb)
     RENDER_TEXT(description, description)
 
     RENDER_LIST(developer, developers, developers)
-    RENDER_LIST(publisher, publishers, developers)
+    RENDER_LIST(publisher, publishers, publishers)
     RENDER_LIST(genre, genres, genres)
 
     if (data.release_year) {
