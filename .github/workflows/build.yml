@@ -3,12 +3,12 @@ name: Build
 on: [push, workflow_dispatch]
 
 env:
-  QT_VER: "5.15.2"
+  QT_VER: "5.15.6"
 
 
 jobs:
   x11-static:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     env:
       TARGET: x11-static
     steps:

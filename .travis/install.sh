@@ -17,18 +17,22 @@ if [[ $TARGET = x11* ]]; then
   sudo apt-get -qq update
   sudo apt-get install -y \
     libgl1-mesa-dev \
-    libxkbcommon-dev \
-    libxkbcommon-x11-dev \
     libudev-dev \
-    libxi-dev \
-    libxkbcommon-dev \
-    libxkbcommon-x11-dev \
+    libx11-xcb-dev \
+    libxcb-glx0-dev \
     libxcb-icccm4-dev \
     libxcb-image0-dev \
     libxcb-keysyms1-dev \
+    libxcb-randr0-dev \
     libxcb-render-util0-dev \
+    libxcb-shape0-dev \
+    libxcb-sync-dev \
     libxcb-util-dev \
+    libxcb-xfixes0-dev \
     libxcb-xinerama0-dev \
+    libxi-dev \
+    libxkbcommon-dev \
+    libxkbcommon-x11-dev \
     libzstd-dev
 fi
 

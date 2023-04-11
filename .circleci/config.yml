@@ -4,9 +4,10 @@ jobs:
     docker:
       - image: mmatyas/pegasus-qt-android
     environment:
-      - TOOLS_URL: https://github.com/mmatyas/pegasus-frontend/releases/download/alpha1
-      - QT_TARGET: qt5152_android
-      - ANDROID_NDK_ROOT: /opt/android-ndk
+      TOOLS_URL: https://github.com/mmatyas/pegasus-frontend/releases/download/alpha1
+      QT_TARGET: qt5156_android
+      ANDROID_SDK_ROOT: /opt/android-sdk
+      ANDROID_NDK_ROOT: /opt/android-sdk/ndk/21.4.7075529
     steps:
       - run: git clone https://github.com/mmatyas/pegasus-metadata-editor .
       - run: git checkout -qf ${CIRCLE_SHA1}
@@ -21,7 +22,7 @@ jobs:
       - run: /opt/${QT_TARGET}/bin/androiddeployqt
           --input src/android-pegasus-metaed-deployment-settings.json
           --output ${PWD}/installdir
-          --android-platform android-22
+          --android-platform android-30
           --gradle
       # Deploy
       - run: mkdir dist
@@ -34,8 +35,8 @@ jobs:
     docker:
       - image: mmatyas/pegasus-qt-mingw
     environment:
-      - TOOLS_URL: https://github.com/mmatyas/pegasus-frontend/releases/download/alpha1
-      - QT_TARGET: qt5152_win32-mingw-static
+      TOOLS_URL: https://github.com/mmatyas/pegasus-frontend/releases/download/alpha1
+      QT_TARGET: qt5156_win32-mingw-static
     steps:
       - run: git clone https://github.com/mmatyas/pegasus-metadata-editor .
       - run: git checkout -qf ${CIRCLE_SHA1}
