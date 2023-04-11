@@ -34,7 +34,7 @@ QString primary_storage_path()
     return QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation).constFirst();
 }
 
-std::vector<QString> storage_paths()
+QStringList storage_paths()
 {
     static constexpr auto JNI_METHOD = "sdcardPaths";
     static constexpr auto JNI_SIGNATURE = "()[Ljava/lang/String;";
@@ -44,16 +44,16 @@ std::vector<QString> storage_paths()
     const auto jni_path_arr = jni_path_arr_raw.object<jobjectArray>();
     const jsize path_count = jni_env->GetArrayLength(jni_path_arr);
 
-    std::vector<QString> out;
+    QStringList out;
     out.reserve(static_cast<size_t>(path_count));
 
     for (jsize i = 0; i < path_count; i++) {
         const auto jni_path_raw = QAndroidJniObject(jni_env->GetObjectArrayElement(jni_path_arr, i));
-        out.emplace_back(jni_path_raw.toString());
+        out.append(jni_path_raw.toString());
     }
 
     if (out.empty())
-        out.emplace_back(primary_storage_path());
+        out.append(primary_storage_path());
 
     return out;
 }

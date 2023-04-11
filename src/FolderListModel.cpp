@@ -17,8 +17,6 @@
 
 #include "FolderListModel.h"
 
-#include "utils/StdHelpers.h"
-
 #ifdef Q_OS_ANDROID
 #include "AndroidHelpers.h"
 #include <QStandardPaths>
@@ -26,13 +24,18 @@
 
 
 namespace {
-void remove_if(QFileInfoList& list, const std::function<bool(const QFileInfo&)>& predicate)
+void erase_if(QFileInfoList& list, const std::function<bool(const QFileInfo&)>& predicate)
 {
     const auto start_it = std::remove_if(list.begin(), list.end(), predicate);
     list.erase(start_it, list.end());
 }
 
-std::vector<QString> drives()
+QString pretty_path(const QString& path)
+{
+    return QDir::toNativeSeparators(QDir::cleanPath(path));
+}
+
+QStringList drives()
 {
 #if defined(Q_OS_ANDROID)
     return android::storage_paths();
@@ -42,11 +45,11 @@ std::vector<QString> drives()
     return { QStringLiteral("/") };
 
 #else
-    std::vector<QString> out;
+    QStringList out;
 
-    const auto drive_files = QDir::drives();
-    for (const auto& file : drive_files)
-        out.emplace_back(file.absolutePath());
+    const QFileInfoList drive_files = QDir::drives();
+    for (const QFileInfo& file : drive_files)
+        out.append(::pretty_path(file.absolutePath()));  // TODO: Qt 6 emplace_back
 
     return out;
 #endif
@@ -62,9 +65,9 @@ QDir startup_dir()
 #endif
 }
 
-bool is_drive_root(const QString& path, const std::vector<QString>& drives)
+bool is_drive_root(const QString& path, const QStringList& drives)
 {
-    return VEC_CONTAINS(drives, path);
+    return drives.contains(path);
 }
 } // namespace
 
@@ -86,7 +89,7 @@ FolderListModel::FolderListModel(QObject* parent)
 {
     m_dir.setSorting(QDir::Name | QDir::DirsFirst | QDir::IgnoreCase);
     m_dir.setFilter(QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Readable);
-    setNameFilters(m_name_filters);
+    cd(QStringLiteral("."));
 }
 
 int FolderListModel::rowCount(const QModelIndex&) const
@@ -127,16 +130,29 @@ void FolderListModel::cd(const QString& dirName)
     }
 
     if (goto_root) {
-        m_dir_path = QStringLiteral("/");
+        m_dir_path = ::pretty_path(QStringLiteral("/"));
         for (const QString& drive : m_drives_cache)
             m_files.emplace_back(drive, true);
     }
     else {
-        m_dir_path = m_dir.absolutePath();
+        m_dir_path = ::pretty_path(m_dir.absolutePath());
 
         auto filist = m_dir.entryInfoList();
-        remove_if(filist, [this](const QFileInfo& fi){
-            return !fi.isDir() && !m_name_filters.contains(fi.fileName());
+        erase_if(filist, [this](const QFileInfo& fi){
+            if (fi.isDir())
+                return false;
+
+            if (m_filenames.contains(fi.fileName()))
+                return false;
+
+            const bool has_matching_ext = std::any_of(
+                m_extensions.cbegin(),
+                m_extensions.cend(),
+                [&fi](const QString& suffix){ return fi.fileName().endsWith(suffix); });
+            if (has_matching_ext)
+                return false;
+
+            return true;
         });
 
         // adding dotdot manually to avoid getting stuck in the file system
@@ -150,13 +166,16 @@ void FolderListModel::cd(const QString& dirName)
     emit folderChanged();
 }
 
-void FolderListModel::setNameFilters(QStringList nameFilters)
+void FolderListModel::setFilenames(QStringList list)
 {
-    m_name_filters = std::move(nameFilters);
+    m_filenames = std::move(list);
+    emit filenamesChanged();
     cd(QStringLiteral("."));
 }
 
-bool FolderListModel::fileExists(QString path) const
+void FolderListModel::setExtensions(QStringList list)
 {
-    return QFileInfo(path).isFile();
+    m_extensions = std::move(list);
+    emit extensionsChanged();
+    cd(QStringLiteral("."));
 }

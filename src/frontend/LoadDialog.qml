@@ -26,11 +26,13 @@ Dialog {
 
     FolderListModel {
         id: folderModel
-        nameFilters: [
+        files: [
             "metadata.pegasus.txt",
             "metadata.txt",
-            "collections.pegasus.txt",
-            "collections.txt",
+        ]
+        extensions: [
+            ".metadata.pegasus.txt",
+            ".metadata.txt",
         ]
     }
 

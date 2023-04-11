@@ -29,11 +29,13 @@ Popup {
 
     FolderListModel {
         id: mFolderModel
-        nameFilters: [
+        files: [
             "metadata.pegasus.txt",
             "metadata.txt",
-            "collections.pegasus.txt",
-            "collections.txt",
+        ]
+        extensions: [
+            ".metadata.pegasus.txt",
+            ".metadata.txt",
         ]
     }
 

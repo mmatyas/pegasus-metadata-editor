@@ -18,13 +18,12 @@
 #pragma once
 
 #include <QString>
-#include <vector>
 
 
 namespace android {
 
 constexpr const char* jni_classname();
 QString primary_storage_path();
-std::vector<QString> storage_paths();
+QStringList storage_paths();
 
 } // namespace android
