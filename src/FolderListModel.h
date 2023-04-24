@@ -55,6 +55,7 @@ public:
     QHash<int, QByteArray> roleNames() const override { return m_role_names; }
 
     Q_INVOKABLE void cd(const QString&);
+    Q_INVOKABLE bool fileExists(QString path) const;
 
     QString folder() const { return m_dir_path; }
     const QStringList& filenames() const { return m_filenames; }

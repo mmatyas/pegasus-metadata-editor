@@ -166,6 +166,11 @@ void FolderListModel::cd(const QString& dirName)
     emit folderChanged();
 }
 
+bool FolderListModel::fileExists(QString path) const
+{
+    return QFileInfo(path).isFile();
+}
+
 void FolderListModel::setFilenames(QStringList list)
 {
     m_filenames = std::move(list);
